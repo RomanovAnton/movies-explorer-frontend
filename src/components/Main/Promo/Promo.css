@@ -1,0 +1,34 @@
+.promo {
+  max-width: 89%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 56% 1fr;
+  grid-template-areas:
+    "promo__title promo__image"
+    "promo__caption  1";
+  column-gap: 14.8%;
+}
+
+.promo__title {
+  grid-area: promo__title;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+}
+
+.promo__caption {
+  grid-area: promo__caption;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 15.73px;
+  opacity: 0.5;
+}
+
+.promo__image {
+  display: flex;
+  justify-content: end;
+  align-items: flex-start;
+  grid-area: promo__image;
+  max-width: 100%;
+  justify-content: end;
+}
