@@ -24,5 +24,3 @@ export default function Main() {
   );
 }
 
-// import NavTab from "../NavTab/NavTab";
-// <NavTab />
