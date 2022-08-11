@@ -8,11 +8,13 @@ import "./Header.css";
 export default function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
   return (
-    <header className="header">
-      <Link to="/">
-        <img src={logo} alt="logo" className="header__logo" />
-      </Link>
-      {loggedIn ? <MoviesNav /> : <AuthNav />}
+    <header className={`header ${loggedIn ? "header_colour_main" : ""}`}>
+      <div className="header__container">
+        <Link to="/">
+          <img src={logo} alt="logo" className="header__logo" />
+        </Link>
+        {loggedIn ? <MoviesNav /> : <AuthNav />}
+      </div>
     </header>
   );
 }

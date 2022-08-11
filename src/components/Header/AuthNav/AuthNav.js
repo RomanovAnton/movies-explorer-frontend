@@ -8,7 +8,10 @@ export default function AuthNav() {
       <Link to="/sign-up" className="auth-nav-menu__link">
         Регистрация
       </Link>
-      <Link to="/sign-in" className="auth-nav-menu__link auth-nav-menu__btn">
+      <Link
+        to="/sign-in"
+        className="auth-nav-menu__link auth-nav-menu__link_btn"
+      >
         Войти
       </Link>
     </div>

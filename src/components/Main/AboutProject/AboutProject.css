@@ -21,21 +21,21 @@
   margin: 0;
 }
 
-.about-project__description {
+.description-block {
   padding: 70px 0 110px;
   display: flex;
   gap: 40px;
   align-items: center;
 }
 
-.description__item {
+.description-block__item {
   max-width: 550px;
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
 
-.item__title {
+.description-block__title {
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
@@ -43,14 +43,14 @@
   margin: 0;
 }
 
-.item__text {
+.description-block__text {
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
   margin: 0;
 }
 
-.about-project__time-line {
+.time-line {
   display: flex;
   flex-direction: row;
 }
@@ -95,52 +95,30 @@
   .about-project {
     padding: 90px 0;
   }
-}
 
-@media screen and (max-width: 825px) {
   .about-project__container {
     max-width: 87%;
   }
-}
 
-@media screen and (max-width: 825px) {
-  .about-project__description {
+  .description-block {
     padding-bottom: 93px;
     gap: 30px;
   }
-}
 
-@media screen and (max-width: 825px) {
-  .description__item {
+  .description-block__item {
     max-width: 319px;
     gap: 30px;
   }
-}
 
-@media screen and (max-width: 825px) {
-  .item__text {
+  .description-block__text {
     font-weight: 400;
     font-size: 12px;
     line-height: 18px;
   }
 }
 
-@media screen and (max-width: 425px) {
-  .about-project {
-    padding: 70px 0;
-  }
-}
-
-@media screen and (max-width: 425px) {
-  .about-project__title {
-    font-size: 18px;
-    line-height: 22px;
-    padding-bottom: 28px;
-  }
-}
-
 @media screen and (max-width: 625px) {
-  .about-project__description {
+  .description-block {
     padding: 60px 0;
     display: flex;
     flex-direction: column;
@@ -149,35 +127,37 @@
 }
 
 @media screen and (max-width: 425px) {
-  .description__item {
+  .about-project {
+    padding: 70px 0;
+  }
+
+  .about-project__title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
+  }
+
+  .description-block__item {
     width: 100%;
     flex-direction: column;
     gap: 16px;
   }
-}
 
-@media screen and (max-width: 425px) {
-  .item__title {
+  .description-block__title {
     font-size: 18px;
     line-height: 22px;
   }
-}
 
-@media screen and (max-width: 425px) {
-  .item__text {
+  .description-block__text {
     font-size: 11px;
     line-height: 16px;
   }
-}
 
-@media screen and (max-width: 425px) {
   .time-line__item {
     font-size: 11px;
     line-height: 13.3px;
   }
-}
 
-@media screen and (max-width: 425px) {
   .time-line__caption {
     margin-top: 10px;
     font-size: 11px;
