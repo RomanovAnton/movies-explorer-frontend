@@ -32,7 +32,7 @@
   max-width: 550px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 26px;
 }
 
 .description-block__title {
@@ -107,7 +107,7 @@
 
   .description-block__item {
     max-width: 319px;
-    gap: 30px;
+    gap: 22px;
   }
 
   .description-block__text {
@@ -129,6 +129,10 @@
 @media screen and (max-width: 425px) {
   .about-project {
     padding: 70px 0;
+  }
+
+  .about-project__container {
+    max-width: 89%;
   }
 
   .about-project__title {
@@ -162,5 +166,14 @@
     margin-top: 10px;
     font-size: 11px;
     line-height: 12.7px;
+  }
+
+  .time-line__item {
+
+    width: 35.2%;
+  }
+  
+  .time-line__item_long {
+    width: 64.8%;
   }
 }

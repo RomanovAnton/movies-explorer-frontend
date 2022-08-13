@@ -15,8 +15,8 @@ export default function Portfolio() {
               rel="noreferrer"
             >
               Статичный сайт
+              <p className="portfolio__link-icon">↗</p>
             </a>
-            <div className="portfolio__link-icon"></div>
           </li>
           <li className="portfolio__list-item">
             <a
@@ -26,8 +26,8 @@ export default function Portfolio() {
               rel="noreferrer"
             >
               Адаптивный сайт
+              <p className="portfolio__link-icon">↗</p>
             </a>
-            <div className="portfolio__link-icon"></div>
           </li>
           <li className="portfolio__list-item">
             <a
@@ -37,8 +37,8 @@ export default function Portfolio() {
               rel="noreferrer"
             >
               Одностраничное приложение
+              <p className="portfolio__link-icon">↗</p>
             </a>
-            <div className="portfolio__link-icon"></div>
           </li>
         </ul>
       </div>

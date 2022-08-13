@@ -11,6 +11,12 @@
   line-height: 16px;
   text-decoration: none;
   cursor: pointer;
+  transition: 0.3s;
+  color: #000000;
+}
+
+.auth-nav-menu__link:hover {
+  opacity: 0.7;
 }
 
 .auth-nav-menu__link_btn {
@@ -22,10 +28,15 @@
   color: #ffffff;
   background-color: #3456f3;
   border-radius: 3px;
+  transition: 0.3s;
+}
+
+.auth-nav-menu__link_btn:hover {
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 321px) {
-  .auth-nav-menu__btn {
+  .auth-nav-menu__link_btn {
     width: 54px;
     height: 26px;
   }

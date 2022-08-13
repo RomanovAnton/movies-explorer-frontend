@@ -1,5 +1,6 @@
 .header {
   background-color: #dddee3;
+  width: 100%;
 }
 
 .header_colour_main {
@@ -20,8 +21,10 @@
   height: 38px;
 }
 
-@media screen and(max-width: 825px) {
-  .header {
+@media screen and (max-width: 825px) {
+  .header__container {
     width: 92.2%;
   }
 }
+
+

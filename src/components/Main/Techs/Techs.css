@@ -49,6 +49,10 @@
   width: 690px;
   padding: 0;
   margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.04em;
 }
 
 .techs-list__item {
@@ -83,6 +87,8 @@
 
   .techs-list {
     width: 648px;
+    font-size: 12px;
+    line-height: 15px;
   }
 
   .techs-list__item {

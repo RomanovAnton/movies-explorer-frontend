@@ -1,5 +1,5 @@
 import React from "react";
-import './Footer.css'
+import "./Footer.css";
 
 export default function Footer() {
   return (
@@ -14,6 +14,8 @@ export default function Footer() {
             <li>
               <a
                 href="https://practicum.yandex.ru/"
+                target="_blank"
+                rel="noreferrer"
                 className="footer__nav-item"
               >
                 Яндекс.Практикум
@@ -22,13 +24,20 @@ export default function Footer() {
             <li>
               <a
                 href="https://github.com/RomanovAnton"
+                target="_blank"
+                rel="noreferrer"
                 className="footer__nav-item"
               >
                 Github
               </a>
             </li>
             <li>
-              <a href="https://t.me/AntRmv" className="footer__nav-item">
+              <a
+                href="https://t.me/AntRmv"
+                target="_blank"
+                rel="noreferrer"
+                className="footer__nav-item"
+              >
                 Telegram
               </a>
             </li>

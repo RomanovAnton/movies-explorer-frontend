@@ -1,6 +1,7 @@
 .footer {
   background-color: #f8f8f8;
 }
+
 .footer__container {
   min-height: 172px;
   display: flex;
@@ -11,13 +12,15 @@
   font-size: 13px;
   line-height: 16px;
 }
+
 .footer__caption {
   margin: 0;
-  padding: 79px 0 20px;
+  padding: 80px 0 20px;
   border-bottom: 1px solid #e8e8e8;
   color: #a0a0a0;
   text-align: center;
 }
+
 .footer__info {
   min-height: 56px;
   display: flex;
@@ -31,8 +34,15 @@
   display: flex;
   gap: 20px;
 }
+
 .footer__nav-item {
   text-decoration: none;
+  color: #000000;
+  transition: 0.3s;
+}
+
+.footer__nav-item:hover {
+  opacity: 0.7;
 }
 
 @media screen and (max-width: 525px) {
@@ -44,15 +54,15 @@
   }
 
   .footer__info {
-    min-height: 56px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding-top: 32px;
+    flex-direction: column-reverse;
   }
 
   .footer__nav {
     gap: 12px;
     flex-direction: column;
     text-align: center;
+    margin: 0;
+    padding: 0 0 20px;
   }
 }
