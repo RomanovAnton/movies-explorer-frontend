@@ -4,13 +4,13 @@ import "./AuthNav.css";
 
 export default function AuthNav() {
   return (
-    <div className="auth-nav-menu">
-      <Link to="/sign-up" className="auth-nav-menu__link">
+    <div className="auth-nav">
+      <Link to="/sign-up" className="auth-nav__link">
         Регистрация
       </Link>
       <Link
         to="/sign-in"
-        className="auth-nav-menu__link auth-nav-menu__link_btn"
+        className="auth-nav__link auth-nav__link_btn"
       >
         Войти
       </Link>

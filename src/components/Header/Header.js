@@ -6,7 +6,7 @@ import MoviesNav from "../Header/MoviesNav/MoviesNav";
 import "./Header.css";
 
 export default function Header() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   return (
     <header className={`header ${loggedIn ? "header_colour_main" : ""}`}>
       <div className="header__container">
