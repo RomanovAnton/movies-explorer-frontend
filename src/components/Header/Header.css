@@ -1,6 +1,7 @@
 .header {
   background-color: #dddee3;
   width: 100%;
+  position: relative;
 }
 
 .header_colour_main {
