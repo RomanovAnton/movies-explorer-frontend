@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import mark from "../../../images/mark.svg";
+import btnAdded from "../../../images/movie-card__btn-added.svg";
+import btnClose from "../../../images/movie-card__btn-close.svg";
 
 import "./MoviesCard.css";
 
-export default function MoviesCard({ card }) {
+export default function MoviesCard({ card, btnType }) {
   const [isSaved, setIsSaved] = useState(false);
 
   return (
@@ -13,12 +14,19 @@ export default function MoviesCard({ card }) {
         <p className="card__duration">{card.duration} минута</p>
       </div>
       <img className="card__image" src={card.image} alt={card.nameRU} />
-      <button
-        className={`card__btn ${isSaved ? "card__btn_active" : ""}`}
-        onClick={() => setIsSaved(!isSaved)}
-      >
-        {isSaved ? <img src={mark} alt="search" /> : "Сохранить"}
-      </button>
+
+      {btnType === "saved" ? (
+        <button className="card__btn">
+          <img src={btnClose} alt="delete" />
+        </button>
+      ) : (
+        <button
+          className={`card__btn ${isSaved ? "card__btn_active" : ""}`}
+          onClick={() => setIsSaved(!isSaved)}
+        >
+          {isSaved ? <img src={btnAdded} alt="added" /> : "Сохранить"}
+        </button>
+      )}
     </div>
   );
 }

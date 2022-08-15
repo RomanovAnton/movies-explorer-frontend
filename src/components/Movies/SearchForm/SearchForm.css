@@ -27,9 +27,6 @@
   line-height: 34px;
   color: #a0a0a0;
   border: none;
-}
-
-.search-form__input:focus {
   outline: 0;
 }
 

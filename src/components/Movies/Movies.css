@@ -6,54 +6,22 @@
   flex-direction: column;
 }
 
-/* .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-}
-.checkbox {
-  display: none;
-}
-
-.custom-checkbox {
-  width: 360px;
-  height: 200px;
-  border-radius: 200px;
-  background-color: #2be080;
-  position: relative;
+.movies__btn {
+  align-self: center;
+  width: 320px;
+  height: 36px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  background-color: #f4f4f4;
+  border: none;
+  padding: 0;
+  margin: 50px 0 80px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.custom-checkbox::before {
-  background-color: aliceblue;
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 10%;
-  bottom: 10%;
-  width: 160px;
-  height: 160px;
-  border-radius: 100%;
-  transition: 0.2s;
+.movies__btn:hover {
+  opacity: 0.8;
 }
-
-.checkbox:checked ~ .custom-checkbox::before {
-  left: 5.56%;
-}
-
-.checkbox:checked ~ .custom-checkbox {
-  background-color: #ebebeb;
-} */
-
-/* 
-<label>
-            <input
-              className="checkbox"
-              type="checkbox"
-              checked={checked}
-              onChange={() => {
-                setChecked(!checked);
-              }}
-            />
-            <div className="custom-checkbox"></div>
-          </label> */

@@ -1,11 +1,11 @@
 .header {
-  background-color: #dddee3;
+  background-color: #fafafa;
   width: 100%;
   position: relative;
 }
 
 .header_colour_main {
-  background-color: #fafafa;
+  background-color: #dddee3;
 }
 
 .header__container {
@@ -27,5 +27,3 @@
     width: 92.2%;
   }
 }
-
-
