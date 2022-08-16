@@ -64,6 +64,10 @@
   line-height: 17px;
 }
 
+.form__input_text_bold {
+  font-weight: 500;
+}
+
 .form__input:focus {
   border-color: #3456f3;
 }

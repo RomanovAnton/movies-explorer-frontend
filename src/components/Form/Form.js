@@ -48,7 +48,7 @@ export default function Form({ type }) {
             <label className="form__label">Email</label>
             <input
               type="email"
-              className="form__input"
+              className="form__input form__input_text_bold"
               name="email"
               minLength={2}
               maxLength={30}
