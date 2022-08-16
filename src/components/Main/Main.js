@@ -10,7 +10,7 @@ import "./Main.css";
 export default function Main() {
   return (
     <div className="content">
-      <Header theme={"dark"} />
+      <Header theme={"dark"} loggedIn={false} />
       <main>
         <Promo />
         <AboutProject />

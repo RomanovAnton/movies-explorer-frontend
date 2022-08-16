@@ -10,7 +10,7 @@ import "./SavedMovies.css";
 export default function SavedMovies() {
   return (
     <>
-      <Header />
+      <Header loggedIn={true} />
       <main className="main">
         <SearchForm />
         <MoviesCardList movies={savedMovies} btnType={"saved"} />

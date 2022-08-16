@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import ProfileButtons from "./ProfileButtons/ProfileButtons";
-
 import "./Profile.css";
 
 export default function Profile() {
@@ -24,11 +22,10 @@ export default function Profile() {
     evt.preventDefault();
     setFormStatusEdit(!formStatusEdit);
   };
-  console.log(formStatusEdit);
 
   return (
     <>
-      <Header />
+      <Header loggedIn={true} />
       <main className="profile">
         <section className="profile__container">
           <form className="profile__form" name="edit-form" noValidate>

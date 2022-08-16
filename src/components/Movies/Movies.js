@@ -10,7 +10,7 @@ import "./Movies.css";
 export default function Movies() {
   return (
     <>
-      <Header />
+      <Header loggedIn={true} />
       <main className="main">
         <SearchForm />
         <MoviesCardList movies={movies} />

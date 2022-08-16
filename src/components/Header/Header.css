@@ -4,7 +4,7 @@
   position: relative;
 }
 
-.header_colour_main {
+.header_colour_dark {
   background-color: #dddee3;
 }
 
@@ -22,8 +22,27 @@
   height: 38px;
 }
 
+.header__container_size_form {
+  width: 396px;
+  min-height: 38px;
+  padding: 70px 0 35px;
+}
+
 @media screen and (max-width: 825px) {
   .header__container {
     width: 92.2%;
+  }
+
+  .header__container_size_form {
+    width: 396px;
+    padding: 232px 0 35px;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .header__container_size_form {
+    justify-content: center;
+    width: 260px;
+    padding: 56px 0 46px;
   }
 }
