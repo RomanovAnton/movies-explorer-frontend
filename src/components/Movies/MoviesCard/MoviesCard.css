@@ -63,3 +63,21 @@
 .card__btn_active {
   background: #ee3465;
 }
+
+@media screen and (max-width: 425px) {
+  .card__title {
+    font-size: 12px;
+  }
+
+  .card__duration {
+    font-size: 10px;
+  }
+
+  .card__info {
+    padding: 14px 0;
+  }
+
+  .card__btn {
+    margin: 12px 0;
+  }
+}

@@ -1,6 +1,5 @@
 .profile {
   background-color: #fafafa;
-  padding: 0;
 }
 
 .profile__container {
@@ -37,6 +36,10 @@
   padding: 17px 0 16px;
   border: 0;
   border-bottom: 1px solid #e8e8e8;
+}
+
+.profile__fieldset:nth-of-type(1) {
+  padding-top: 0;
 }
 
 .profile__label {

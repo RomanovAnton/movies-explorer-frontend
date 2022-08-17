@@ -8,7 +8,7 @@ export default function Register() {
     <>
       <Header type={"form"} />
       <main>
-        <Form type={"register"} />
+        <Form type={"register"} error={true} />
       </main>
     </>
   );

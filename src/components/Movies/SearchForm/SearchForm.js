@@ -16,6 +16,7 @@ export default function SearchForm() {
         <label className="checkbox">
           <input type="checkbox" className="checkbox__input" />
           <div className="checkbox__custom"></div>
+          <p className="checkbox__caption">Короткометражки</p>
         </label>
       </form>
     </section>

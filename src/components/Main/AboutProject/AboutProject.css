@@ -115,6 +115,14 @@
     font-size: 12px;
     line-height: 18px;
   }
+
+  .time-line__item {
+    width: 21%;
+  }
+
+  .time-line__item_long {
+    width: 80%;
+  }
 }
 
 @media screen and (max-width: 625px) {
@@ -128,7 +136,7 @@
 
 @media screen and (max-width: 425px) {
   .about-project {
-    padding: 70px 0;
+    padding: 72px 0;
   }
 
   .about-project__container {
@@ -169,10 +177,9 @@
   }
 
   .time-line__item {
-
     width: 35.2%;
   }
-  
+
   .time-line__item_long {
     width: 64.8%;
   }

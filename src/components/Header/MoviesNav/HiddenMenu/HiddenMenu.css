@@ -27,8 +27,8 @@
   position: absolute;
   width: 22px;
   height: 22px;
-  right: 22.44px;
-  top: 22.44px;
+  right: 26.44px;
+  top: 26.44px;
   cursor: pointer;
 }
 
@@ -83,15 +83,16 @@
   }
 
   .hidden-menu__close {
-    right: 13.44px;
-    top: 13.44px;
+    right: 18.44px;
+    top: 17.44px;
   }
 
   .hidden-nav {
     padding-top: 144px;
+    gap: 24px;
   }
 
-  .hidden-nav {
-    gap: 15px;
+  .hidden-nav__link {
+    padding-bottom: 7px;
   }
 }

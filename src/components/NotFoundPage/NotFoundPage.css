@@ -29,6 +29,7 @@
   line-height: 17px;
   color: #3456f3;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 .not-found-page__btn:hover {

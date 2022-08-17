@@ -11,3 +11,22 @@
   justify-content: center;
   padding: 70px 0 10px;
 }
+
+@media screen and (max-width: 769px) {
+  .movies__card-list {
+    grid-template-columns: repeat(auto-fill, 342px);
+    column-gap: 24px;
+    row-gap: 37px;
+    justify-content: center;
+    padding: 70px 0 30px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .movies__card-list {
+    grid-template-columns: 300px;
+    row-gap: 18px;
+    justify-content: center;
+    padding: 40px 0 30px;
+  }
+}

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Form.css";
 
-export default function Form({ type }) {
+export default function Form({ type, error }) {
   const [inputName, setInputName] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
@@ -61,7 +61,7 @@ export default function Form({ type }) {
             <label className="form__label">Пароль</label>
             <input
               type="password"
-              className="form__input"
+              className={`form__input ${error && "form__input_error"}`}
               name="password"
               value={inputPassword}
               onChange={handleInputPassword}
