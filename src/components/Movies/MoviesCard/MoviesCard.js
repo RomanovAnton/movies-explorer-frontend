@@ -5,6 +5,7 @@ import btnClose from "../../../images/movie-card__btn-close.svg";
 import "./MoviesCard.css";
 
 export default function MoviesCard({ card, btnType }) {
+  const cardImage = ` https://api.nomoreparties.co/${card.image.url}`;
   const [isSaved, setIsSaved] = useState(false);
 
   return (
@@ -13,7 +14,7 @@ export default function MoviesCard({ card, btnType }) {
         <p className="card__title">{card.nameRU}</p>
         <p className="card__duration">{card.duration} минута</p>
       </div>
-      <img className="card__image" src={card.image} alt={card.nameRU} />
+      <img className="card__image" src={cardImage} alt={card.nameRU} />
 
       {btnType === "saved" ? (
         <button className="card__btn">

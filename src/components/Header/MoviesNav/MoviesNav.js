@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import  HiddenMenu  from "./HiddenMenu/HiddenMenu";
+import HiddenMenu from "./HiddenMenu/HiddenMenu";
 import "./MoviesNav.css";
 
 export default function MoviesNav() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-  console.log(menuIsOpen)
-
   const toggleDisplayMenu = () => {
     setMenuIsOpen(!menuIsOpen);
   };
