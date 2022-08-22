@@ -5,7 +5,7 @@ export const savedMovies = [
     duration: 61,
     nameRU: "Роллинг Стоунз» в изгнании",
     save: false,
-    _id: 6,
+    _id: 6432,
   },
   {
     image:
@@ -13,7 +13,7 @@ export const savedMovies = [
     duration: 61,
     nameRU: "Роллинг Стоунз» в изгнании",
     save: false,
-    _id: 7,
+    _id: 34327,
   },
   {
     image:
@@ -21,7 +21,7 @@ export const savedMovies = [
     duration: 61,
     nameRU: "Роллинг Стоунз» в изгнании",
     save: false,
-    _id: 8,
+    _id: 4328,
   },
   {
     image:
@@ -29,7 +29,7 @@ export const savedMovies = [
     duration: 61,
     nameRU: "Роллинг Стоунз» в изгнании",
     save: false,
-    _id: 9,
+    _id: 94242342,
   },
   {
     image:
@@ -37,7 +37,7 @@ export const savedMovies = [
     duration: 61,
     nameRU: "Роллинг Стоунз» в изгнании",
     save: false,
-    _id: 10,
+    _id: 14234420,
   },
 
 ];
