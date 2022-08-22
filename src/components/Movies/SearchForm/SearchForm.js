@@ -12,10 +12,18 @@ export default function SearchForm({
   const [inputValue, setInputValue] = useState("");
   const [checkboxValue, setCheckboxValue] = useState(false);
 
-  // useEffect(() => {
-  //   const inputValue = localStorage.getItem("search-text");
-  //   setInputValue(inputValue);
-  // }, []);
+  useEffect(() => {
+    const inputValue = localStorage.getItem("search-text");
+    const checkboxValue = localStorage.getItem("is-short-movies");
+
+    if (checkboxValue === "yes") {
+      setCheckboxValue(true);
+    } else {
+      setCheckboxValue(false);
+    }
+
+    setInputValue(inputValue);
+  }, []);
 
   console.log(checkboxValue);
 
@@ -30,7 +38,7 @@ export default function SearchForm({
   const handleSearchClick = () => {
     // localStorage.clear();
     localStorage.setItem("search-text", inputValue.toLowerCase());
-    localStorage.setItem("is-short-movie", checkboxValue ? "yes" : "no");
+    localStorage.setItem("is-short-movies", checkboxValue ? "yes" : "no");
     const serverData = localStorage.getItem("all-movies");
     if (!serverData) {
       openPreloader();
@@ -45,6 +53,8 @@ export default function SearchForm({
         .catch(() => openPopup("Ошибка сервера"))
         .finally(() => closePreloader());
     }
+
+    renderMovies();
   };
 
   return (
@@ -63,7 +73,7 @@ export default function SearchForm({
         <label className="checkbox">
           <input
             type="checkbox"
-            checked={checkboxValue}
+            checked={checkboxValue ?? false}
             className="checkbox__input"
             onChange={handleCheckboxChange}
           />
