@@ -3,23 +3,46 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Form.css";
 
-export default function Form({ type, error }) {
-  const [inputName, setInputName] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputPassword, setInputPassword] = useState("");
-
-  const handleInputName = (evt) => {
-    setInputName(evt.target.value);
-  };
-  const handleInputEmail = (evt) => {
-    setInputEmail(evt.target.value);
-  };
-  const handleInputPassword = (evt) => {
-    setInputPassword(evt.target.value);
-  };
-
+export default function Form({ type, error, handleRegister }) {
   const handleBtnClick = (evt) => {
     evt.preventDefault();
+    handleRegister(formParams);
+  };
+
+  const [formParams, setFormParams] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  // const [isValid, setIsValid] = useState({
+  //   name: null,
+  //   email: null,
+  //   password: null,
+  // });
+
+  // const [error, setError] = useState({
+  //   name: "",
+  //   email: "",
+  //   password: "",
+  // });
+
+  const handleChangeFormParam = (evt) => {
+    const { name, value } = evt.target;
+    setFormParams((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // setIsValid((prev) => ({
+    //   ...prev,
+    //   [name]: value.validity.valid,
+    // }));
+
+    // setError((prev) => ({
+    //   ...prev,
+    //   [name]: value.validation.message,
+    // }));
   };
 
   return (
@@ -38,8 +61,8 @@ export default function Form({ type, error }) {
                 name="name"
                 minLength={2}
                 maxLength={30}
-                value={inputName}
-                onChange={handleInputName}
+                value={formParams.name}
+                onChange={handleChangeFormParam}
               />
             </fieldset>
           ) : null}
@@ -52,8 +75,8 @@ export default function Form({ type, error }) {
               name="email"
               minLength={2}
               maxLength={30}
-              value={inputEmail}
-              onChange={handleInputEmail}
+              value={formParams.email}
+              onChange={handleChangeFormParam}
             />
           </fieldset>
 
@@ -63,8 +86,8 @@ export default function Form({ type, error }) {
               type="password"
               className={`form__input ${error && "form__input_error"}`}
               name="password"
-              value={inputPassword}
-              onChange={handleInputPassword}
+              value={formParams.password}
+              onChange={handleChangeFormParam}
             />
           </fieldset>
 

@@ -3,7 +3,6 @@ export const filterMovies = () => {
   const isShortMovies = localStorage.getItem("is-short-movies");
   const searchText = localStorage.getItem("search-text");
 
-
   const moviesArr = allMovies.filter((movie) =>
     movie.nameRU.toLowerCase().includes(searchText)
   );

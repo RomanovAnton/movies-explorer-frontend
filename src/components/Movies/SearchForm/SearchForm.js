@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { useState, useEffect } from "react";
-import { moviesApi } from "../../../utils/MoviesApi";
-
+import { getMovies } from "../../../utils/MoviesApi";
+import { COMMON_ERROR_TEXT } from "../../../utils/constants/constants";
 import "./SearchForm.css";
 
 export default function SearchForm({
@@ -11,8 +11,18 @@ export default function SearchForm({
   closePreloader,
 }) {
   const [inputValue, setInputValue] = useState("");
-  const [inputValueIsValid, setInputValueIsValid] = useState(false);
   const [checkboxValue, setCheckboxValue] = useState(false);
+  const [inputValueIsValid, setInputValueIsValid] = useState(false);
+
+  const handleInputChange = (evt) => {
+    setInputValue(evt.target.value);
+  };
+
+  const handleCheckboxChange = () => {
+    setCheckboxValue(!checkboxValue);
+    // localStorage.setItem("is-short-movies", checkboxValue ? "yes" : "no");
+    // renderMovies();
+  };
 
   const btnClass = classNames("search-form__btn", {
     "search-form__btn_disabled": !inputValueIsValid,
@@ -32,20 +42,12 @@ export default function SearchForm({
   }, []);
 
   useEffect(() => {
-    inputValue.length === 0
-      ? setInputValueIsValid(false)
-      : setInputValueIsValid(true);
+    if (inputValue) {
+      setInputValueIsValid(true);
+    } else {
+      setInputValueIsValid(false);
+    }
   }, [inputValue]);
-
-  const handleInputChange = (evt) => {
-    setInputValue(evt.target.value);
-  };
-
-  const handleCheckboxChange = () => {
-    setCheckboxValue(!checkboxValue);
-    // localStorage.setItem("is-short-movies", checkboxValue ? "yes" : "no");
-    // renderMovies();
-  };
 
   const handleSearchClick = (evt) => {
     evt.preventDefault();
@@ -54,23 +56,18 @@ export default function SearchForm({
     const serverData = localStorage.getItem("all-movies");
     if (!serverData) {
       openPreloader();
-      moviesApi
-        .getMovies()
+      getMovies()
         .then((res) => {
           localStorage.setItem("all-movies", JSON.stringify(res));
         })
         .then(() => {
           renderMovies();
         })
-        .catch(() =>
-          openPopup(
-            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-          )
-        )
+        .catch(() => openPopup(COMMON_ERROR_TEXT))
         .finally(() => closePreloader());
+    } else {
+      renderMovies();
     }
-
-    renderMovies();
   };
 
   return (
