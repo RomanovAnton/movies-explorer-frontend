@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { useState, useEffect } from "react";
 import { moviesApi } from "../../../utils/MoviesApi";
 
@@ -10,7 +11,12 @@ export default function SearchForm({
   closePreloader,
 }) {
   const [inputValue, setInputValue] = useState("");
+  const [inputValueIsValid, setInputValueIsValid] = useState(false);
   const [checkboxValue, setCheckboxValue] = useState(false);
+
+  const btnClass = classNames("search-form__btn", {
+    "search-form__btn_disabled": !inputValueIsValid,
+  });
 
   useEffect(() => {
     const inputValue = localStorage.getItem("search-text");
@@ -25,7 +31,11 @@ export default function SearchForm({
     setInputValue(inputValue);
   }, []);
 
-  console.log(checkboxValue);
+  useEffect(() => {
+    inputValue.length === 0
+      ? setInputValueIsValid(false)
+      : setInputValueIsValid(true);
+  }, [inputValue]);
 
   const handleInputChange = (evt) => {
     setInputValue(evt.target.value);
@@ -33,10 +43,12 @@ export default function SearchForm({
 
   const handleCheckboxChange = () => {
     setCheckboxValue(!checkboxValue);
+    // localStorage.setItem("is-short-movies", checkboxValue ? "yes" : "no");
+    // renderMovies();
   };
 
-  const handleSearchClick = () => {
-    // localStorage.clear();
+  const handleSearchClick = (evt) => {
+    evt.preventDefault();
     localStorage.setItem("search-text", inputValue.toLowerCase());
     localStorage.setItem("is-short-movies", checkboxValue ? "yes" : "no");
     const serverData = localStorage.getItem("all-movies");
@@ -50,7 +62,11 @@ export default function SearchForm({
         .then(() => {
           renderMovies();
         })
-        .catch(() => openPopup("Ошибка сервера"))
+        .catch(() =>
+          openPopup(
+            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+          )
+        )
         .finally(() => closePreloader());
     }
 
@@ -68,7 +84,11 @@ export default function SearchForm({
             value={inputValue ?? ""}
             onChange={handleInputChange}
           />
-          <div className="search-form__btn" onClick={handleSearchClick}></div>
+          <button
+            className={btnClass}
+            onClick={handleSearchClick}
+            disabled={!inputValueIsValid}
+          ></button>
         </div>
         <label className="checkbox">
           <input

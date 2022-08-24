@@ -3,15 +3,16 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
-import { moviesApi } from "../../utils/MoviesApi";
 import { filterMovies } from "../../utils/filterMovies";
-import Popup from "../Popup/Popup";
 import Preloader from "./Preloader/Preloader";
 import "./Movies.css";
 
 export default function Movies({ openPopup }) {
+  const width = window.innerWidth;
   const [movies, setMovies] = useState([]);
   const [preloaderActive, setPreloaderActive] = useState(false);
+  const [numDisplayedMovies, setNumDisplayedMovies] = useState(0);
+  const [numAddedMovies, setNumAddedMovies] = useState(0);
 
   useEffect(() => {
     const serverData = localStorage.getItem("all-movies");
@@ -22,9 +23,34 @@ export default function Movies({ openPopup }) {
     setMovies(filteredMovies);
   }, []);
 
+  useEffect(() => determineWidth(), [width]);
+
+  const determineWidth = () => {
+    if (width < 481) {
+      setNumDisplayedMovies(5);
+      setNumAddedMovies(2);
+      return;
+    }
+    if (width > 480 && width < 769) {
+      setNumDisplayedMovies(8);
+      setNumAddedMovies(2);
+      return;
+    }
+    setNumDisplayedMovies(12);
+    setNumAddedMovies(3);
+  };
+
   const renderMovies = () => {
     const filteredMovies = filterMovies();
     setMovies(filteredMovies);
+    if (filteredMovies.length === 0) {
+      openPopup("По вашему запросу ничего не найдено");
+      return;
+    }
+  };
+
+  const addMovies = () => {
+    setNumDisplayedMovies((prev) => prev + numAddedMovies);
   };
 
   const openPreloader = () => {
@@ -49,8 +75,12 @@ export default function Movies({ openPopup }) {
           <Preloader />
         ) : (
           <>
-            <MoviesCardList movies={movies} />
-            <button className="movies__btn">Еще</button>
+            <MoviesCardList movies={movies.slice(0, numDisplayedMovies)} />
+            {numDisplayedMovies < movies.length && numDisplayedMovies > 2 ? (
+              <button className="movies__btn" onClick={addMovies}>
+                Еще
+              </button>
+            ) : null}
           </>
         )}
       </main>

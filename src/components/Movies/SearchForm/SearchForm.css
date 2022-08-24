@@ -42,11 +42,20 @@ input::-moz-placeholder {
   width: 80px;
   height: 34px;
   border-radius: 48px;
+  border: 0;
   background-color: #3456f3;
   background-image: url(../../../images/search-icon-min.svg);
   background-repeat: no-repeat;
   object-fit: contain;
   background-position: center;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.search-form__btn_disabled {
+  background-color: #f4f4f4;
+  color: #0000;
+  cursor: default;
   transition: 0.3s;
 }
 
