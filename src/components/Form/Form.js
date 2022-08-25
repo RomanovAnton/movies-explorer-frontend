@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Form.css";
 
-export default function Form({ type, handleRegister }) {
+export default function Form({ type, onRegister, onLogin }) {
   const [formIsValid, setFormIsValid] = useState(false);
   const [formParams, setFormParams] = useState({
     name: "",
@@ -41,7 +41,11 @@ export default function Form({ type, handleRegister }) {
 
   const handleBtnClick = (evt) => {
     evt.preventDefault();
-    handleRegister(formParams);
+    if (type === "register") {
+      onRegister(formParams);
+    } else {
+      onLogin(formParams);
+    }
   };
 
   const btnClass = classNames("form__button", {

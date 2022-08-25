@@ -8,21 +8,42 @@ import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import Popup from "../Popup/Popup";
-import { register } from "../../utils/MainApi";
+import { register, login, checkToken } from "../../utils/MainApi";
 import {
   SUCCSESS_REGISTER_TEXT,
   CONFLICT_ERROR_TEXT,
   CONFLICT_ERROR_CODE,
+  UNAUTHORIZED_ERROR_TEXT,
+  UNAUTHORIZED_ERROR_CODE,
   COMMON_ERROR_TEXT,
 } from "../../utils/constants/constants";
 
 import "./App.css";
+import { useEffect } from "react";
 
 export default function App() {
   let navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
   const [popupIsOpen, setPopupIsOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
+
+  useEffect(() => {
+    getProfileData();
+  }, []);
+
+  const getProfileData = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      checkToken(token)
+        .then((res) => {
+          setLoggedIn(true);
+          // setProfileData
+          // setSavedMovies
+          navigate("/movies");
+        })
+        .catch((errCode) => console.log(errCode));
+    }
+  };
 
   const closePopup = () => {
     setPopupIsOpen(false);
@@ -34,12 +55,11 @@ export default function App() {
     setPopupIsOpen(true);
   };
 
-  const handleRegister = (data) => {
-    register(data)
+  const handleRegister = async (data) => {
+    await register(data)
       .then((res) => {
         openPopup(SUCCSESS_REGISTER_TEXT);
         // setTimeout(closePopup, 1000);
-        navigate("/sign-in");
       })
       .catch((errCode) => {
         if (errCode === CONFLICT_ERROR_CODE) {
@@ -48,12 +68,40 @@ export default function App() {
           openPopup(COMMON_ERROR_TEXT);
         }
       });
+
+    handleLogin(data);
+  };
+
+  const handleLogin = (data) => {
+    login(data)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem("token", res.token);
+          setLoggedIn(true);
+          navigate("/movies");
+        }
+      })
+      .catch((errCode) => {
+        if (errCode === UNAUTHORIZED_ERROR_CODE) {
+          openPopup(UNAUTHORIZED_ERROR_TEXT);
+        } else {
+          openPopup(COMMON_ERROR_TEXT);
+        }
+        setLoggedIn(false);
+      });
+  };
+
+  const signOut = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    //useData -> 0
+    navigate("./sign-in");
   };
 
   return (
     <div className="app">
       <Routes>
-        <Route exact path="/" element={<Main />} />
+        <Route exact path="/" element={<Main loggedIn={loggedIn} />} />
         <Route
           path="/movies"
           element={<Movies openPopup={openPopup} closePopup={closePopup} />}
@@ -61,10 +109,10 @@ export default function App() {
         <Route path="/saved-movies" element={<SavedMovies />} />
         <Route
           path="/sign-up"
-          element={<Register handleRegister={handleRegister} />}
+          element={<Register onRegister={handleRegister} />}
         />
-        <Route path="/sign-in" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
+        <Route path="/profile" element={<Profile onSignOut={signOut} />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Popup

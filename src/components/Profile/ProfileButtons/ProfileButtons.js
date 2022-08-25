@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import classNames from "classnames";
 import "./ProfileButtons.css";
 
@@ -7,6 +6,7 @@ export default function ProfileButtons({
   formStatusEdit,
   handleBtnClick,
   error,
+  onSignOut,
 }) {
   const classSaveBtn = classNames("profile__btn", {
     "profile__btn_type_save profile__btn_disabled": error,
@@ -41,9 +41,9 @@ export default function ProfileButtons({
             Редактировать
           </button>
           <button className=" profile__btn">
-            <Link to="./sign-in" className="profile__btn_type_link">
+            <div className="profile__btn_type_link" onClick={onSignOut}>
               Выйти из аккаунта
-            </Link>
+            </div>
           </button>
         </>
       )}

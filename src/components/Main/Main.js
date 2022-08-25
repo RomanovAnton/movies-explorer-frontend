@@ -7,10 +7,10 @@ import AboutMe from "./AboutMe/AboutMe";
 import Footer from "../Footer/Footer";
 import "./Main.css";
 
-export default function Main() {
+export default function Main({ loggedIn }) {
   return (
     <div className="content">
-      <Header theme={"dark"} loggedIn={false} />
+      <Header theme={"dark"} loggedIn={loggedIn} />
       <main>
         <Promo />
         <AboutProject />

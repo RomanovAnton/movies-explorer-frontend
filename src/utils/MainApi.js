@@ -13,3 +13,25 @@ export const register = (data) => {
     body: JSON.stringify(data),
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 };
+
+export const login = (data) => {
+  return fetch(`${options.baseUrl}/signin`, {
+    method: "POST",
+    headers: options.headers,
+    body: JSON.stringify({
+      email: data.email,
+      password: data.password,
+    }),
+  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
+};
+
+export const checkToken = (token) => {
+  return fetch(`${options.baseUrl}/users/me`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+

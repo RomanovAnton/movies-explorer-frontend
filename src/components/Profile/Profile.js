@@ -3,7 +3,7 @@ import Header from "../Header/Header";
 import ProfileButtons from "./ProfileButtons/ProfileButtons";
 import "./Profile.css";
 
-export default function Profile() {
+export default function Profile({ onSignOut }) {
   const { name, email } = { name: "Anton", email: "fsd@ya.ru" };
   const [inputName, setInputName] = useState("Anton");
   const [inputEmail, setInputEmail] = useState("123@123.ru");
@@ -62,6 +62,7 @@ export default function Profile() {
               formStatusEdit={formStatusEdit}
               handleBtnClick={handleBtnClick}
               error={error}
+              onSignOut={onSignOut}
             />
           </form>
         </section>
