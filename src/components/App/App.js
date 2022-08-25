@@ -38,6 +38,7 @@ export default function App() {
     register(data)
       .then((res) => {
         openPopup(SUCCSESS_REGISTER_TEXT);
+        // setTimeout(closePopup, 1000);
         navigate("/sign-in");
       })
       .catch((errCode) => {
