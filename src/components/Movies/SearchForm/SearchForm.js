@@ -5,7 +5,9 @@ import { COMMON_ERROR_TEXT } from "../../../utils/constants/constants";
 import "./SearchForm.css";
 
 export default function SearchForm({
+  type,
   renderMovies,
+  renderSavedMovies,
   openPopup,
   openPreloader,
   closePreloader,
@@ -29,16 +31,19 @@ export default function SearchForm({
   });
 
   useEffect(() => {
-    const inputValue = localStorage.getItem("search-text");
-    const checkboxValue = localStorage.getItem("is-short-movies");
-
-    if (checkboxValue === "yes") {
-      setCheckboxValue(true);
-    } else {
+    if (type === "all") {
+      const inputValue = localStorage.getItem("search-text");
+      const checkboxValue = localStorage.getItem("is-short-movies");
+      if (checkboxValue === "yes") {
+        setCheckboxValue(true);
+      } else {
+        setCheckboxValue(false);
+      }
+      setInputValue(inputValue);
+    } else if (type === "saved") {
+      setInputValue("");
       setCheckboxValue(false);
     }
-
-    setInputValue(inputValue);
   }, []);
 
   useEffect(() => {
@@ -51,22 +56,29 @@ export default function SearchForm({
 
   const handleSearchClick = (evt) => {
     evt.preventDefault();
-    localStorage.setItem("search-text", inputValue.toLowerCase());
-    localStorage.setItem("is-short-movies", checkboxValue ? "yes" : "no");
-    const serverData = localStorage.getItem("all-movies");
-    if (!serverData) {
-      openPreloader();
-      getMovies()
-        .then((res) => {
-          localStorage.setItem("all-movies", JSON.stringify(res));
-        })
-        .then(() => {
-          renderMovies();
-        })
-        .catch(() => openPopup(COMMON_ERROR_TEXT))
-        .finally(() => closePreloader());
-    } else {
-      renderMovies();
+    if (type === "all") {
+      localStorage.setItem("search-text", inputValue.toLowerCase());
+      localStorage.setItem("is-short-movies", checkboxValue ? "yes" : "no");
+      const serverData = localStorage.getItem("all-movies");
+      if (!serverData) {
+        openPreloader();
+        getMovies()
+          .then((res) => {
+            localStorage.setItem("all-movies", JSON.stringify(res));
+          })
+          .then(() => {
+            renderMovies();
+          })
+          .catch(() => openPopup(COMMON_ERROR_TEXT))
+          .finally(() => closePreloader());
+      } else {
+        renderMovies();
+      }
+    } else if (type === "saved") {
+      renderSavedMovies({
+        searchText: inputValue,
+        isShortMovies: checkboxValue,
+      });
     }
   };
 

@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import btnAdded from "../../../images/movie-card__btn-added.svg";
 import btnClose from "../../../images/movie-card__btn-close.svg";
 import { SavedMoviesContext } from "../../../contexts/SavedMoviesContext";
 import "./MoviesCard.css";
-import { useEffect } from "react";
 
 export default function MoviesCard({ card, type, onSaveMovie, onDeleteMovie }) {
   const savedMovies = useContext(SavedMoviesContext);

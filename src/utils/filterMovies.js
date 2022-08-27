@@ -13,3 +13,18 @@ export const filterMovies = () => {
     return moviesArr;
   }
 };
+
+export const filterSavedMovies = (savedMovies, searchData) => {
+  const { searchText, isShortMovies } = searchData;
+  const moviesArr = savedMovies.filter((movie) =>
+    movie.nameRU.toLowerCase().includes(searchText)
+  );
+
+  if (isShortMovies === "yes") {
+    return moviesArr.filter((movie) => movie.duration <= 40);
+  } else {
+    return moviesArr;
+  }
+};
+
+//можно объединить в зависимсоти от типа логика

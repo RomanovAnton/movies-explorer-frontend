@@ -154,7 +154,7 @@ export default function App() {
             />
             <Route
               path="/saved-movies"
-              element={<SavedMovies onDeleteMovie={handleDeleteMovie} />}
+              element={<SavedMovies onDeleteMovie={handleDeleteMovie} openPopup={openPopup} />}
             />
             <Route
               path="/sign-up"

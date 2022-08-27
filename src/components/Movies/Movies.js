@@ -70,6 +70,7 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
           openPopup={openPopup}
           openPreloader={openPreloader}
           closePreloader={closePreloader}
+          type={'all'}
         />
         {preloaderActive ? (
           <Preloader />
