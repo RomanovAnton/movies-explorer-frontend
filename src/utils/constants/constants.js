@@ -20,6 +20,7 @@ export const COMMON_ERROR_CODE = 500;
 
 // MESSAGE
 export const SUCCSESS_REGISTER_TEXT = "Вы успешно зарегистрировались!";
+export const SUCCSESS_UPDATE_PROFILE_TEXT = "Данные успешно изменены";
 
 
 

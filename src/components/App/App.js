@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -8,7 +8,17 @@ import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import Popup from "../Popup/Popup";
-import { register, login, checkToken } from "../../utils/MainApi";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { SavedMoviesContext } from "../../contexts/SavedMoviesContext";
+import {
+  register,
+  login,
+  checkToken,
+  updateProfile,
+  addSavedMovie,
+  getSavedMovies,
+  deleteSavedMovie,
+} from "../../utils/MainApi";
 import {
   SUCCSESS_REGISTER_TEXT,
   CONFLICT_ERROR_TEXT,
@@ -16,20 +26,21 @@ import {
   UNAUTHORIZED_ERROR_TEXT,
   UNAUTHORIZED_ERROR_CODE,
   COMMON_ERROR_TEXT,
+  SUCCSESS_UPDATE_PROFILE_TEXT,
 } from "../../utils/constants/constants";
-
 import "./App.css";
-import { useEffect } from "react";
 
 export default function App() {
   let navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  const [savedMovies, setSavedMovies] = useState([]);
   const [popupIsOpen, setPopupIsOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
 
   useEffect(() => {
     getProfileData();
-  }, []);
+  }, [loggedIn]);
 
   const getProfileData = () => {
     const token = localStorage.getItem("token");
@@ -37,8 +48,12 @@ export default function App() {
       checkToken(token)
         .then((res) => {
           setLoggedIn(true);
-          // setProfileData
-          // setSavedMovies
+          setCurrentUser(res);
+          getSavedMovies()
+            .then((res) => {
+              setSavedMovies(res);
+            })
+            .catch(() => console.log("Сохраненных фильмов пока нет")); // будет ли прилетать в catch если список пуст
           navigate("/movies");
         })
         .catch((errCode) => console.log(errCode));
@@ -59,6 +74,7 @@ export default function App() {
     await register(data)
       .then((res) => {
         openPopup(SUCCSESS_REGISTER_TEXT);
+        handleLogin(data);
         // setTimeout(closePopup, 1000);
       })
       .catch((errCode) => {
@@ -68,8 +84,6 @@ export default function App() {
           openPopup(COMMON_ERROR_TEXT);
         }
       });
-
-    handleLogin(data);
   };
 
   const handleLogin = (data) => {
@@ -94,32 +108,74 @@ export default function App() {
   const signOut = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    //useData -> 0
-    navigate("./sign-in");
+    navigate("/");
+  };
+
+  const handleUpdateProfile = (data) => {
+    updateProfile(data)
+      .then((res) => {
+        setCurrentUser(res);
+        openPopup(SUCCSESS_UPDATE_PROFILE_TEXT);
+      })
+      .catch(() => {
+        openPopup(COMMON_ERROR_TEXT);
+      });
+  };
+
+  const handleSaveMovie = (data) => {
+    addSavedMovie(data).then((newSavedMovie) => {
+      setSavedMovies([...savedMovies, newSavedMovie]);
+    });
+  };
+
+  const handleDeleteMovie = (_id) => {
+    deleteSavedMovie(_id)
+      .then(() => {
+        setSavedMovies((prev) => prev.filter((item) => item._id !== _id));
+      })
+      .catch(() => openPopup(COMMON_ERROR_TEXT));
   };
 
   return (
-    <div className="app">
-      <Routes>
-        <Route exact path="/" element={<Main loggedIn={loggedIn} />} />
-        <Route
-          path="/movies"
-          element={<Movies openPopup={openPopup} closePopup={closePopup} />}
-        />
-        <Route path="/saved-movies" element={<SavedMovies />} />
-        <Route
-          path="/sign-up"
-          element={<Register onRegister={handleRegister} />}
-        />
-        <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
-        <Route path="/profile" element={<Profile onSignOut={signOut} />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      <Popup
-        isOpen={popupIsOpen}
-        message={popupMessage}
-        closePopup={closePopup}
-      />
-    </div>
+    <CurrentUserContext.Provider value={currentUser}>
+      <SavedMoviesContext.Provider value={savedMovies}>
+        <div className="app">
+          <Routes>
+            <Route exact path="/" element={<Main loggedIn={loggedIn} />} />
+            <Route
+              path="/movies"
+              element={
+                <Movies
+                  openPopup={openPopup}
+                  onSaveMovie={handleSaveMovie}
+                  onDeleteMovie={handleDeleteMovie}
+                />
+              }
+            />
+            <Route
+              path="/saved-movies"
+              element={<SavedMovies onDeleteMovie={handleDeleteMovie} />}
+            />
+            <Route
+              path="/sign-up"
+              element={<Register onRegister={handleRegister} />}
+            />
+            <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
+            <Route
+              path="/profile"
+              element={
+                <Profile onSignOut={signOut} onUpdate={handleUpdateProfile} />
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+          <Popup
+            isOpen={popupIsOpen}
+            message={popupMessage}
+            closePopup={closePopup}
+          />
+        </div>
+      </SavedMoviesContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }

@@ -1,12 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import btnAdded from "../../../images/movie-card__btn-added.svg";
 import btnClose from "../../../images/movie-card__btn-close.svg";
-
+import { SavedMoviesContext } from "../../../contexts/SavedMoviesContext";
 import "./MoviesCard.css";
+import { useEffect } from "react";
 
-export default function MoviesCard({ card, btnType }) {
-  const cardImage = ` https://api.nomoreparties.co/${card.image.url}`;
+export default function MoviesCard({ card, type, onSaveMovie, onDeleteMovie }) {
+  const savedMovies = useContext(SavedMoviesContext);
+  const cardImage =
+    type === "saved"
+      ? card.image
+      : ` https://api.nomoreparties.co/${card.image.url}`;
+
   const [isSaved, setIsSaved] = useState(false);
+
+  const saveMovie = () => {
+    onSaveMovie(card);
+  };
+
+  const isSavedMovie = () => {
+    const isSaved = savedMovies.find((item) => item.movieId === card.id);
+    setIsSaved(isSaved);
+  };
+
+  const deleteMovie = () => {
+    let movieId24Sign;
+    if (type === "all") {
+      movieId24Sign = savedMovies.filter((item) => item.movieId === card.id)[0]
+        ._id;
+      onDeleteMovie(movieId24Sign);
+      return;
+    }
+    onDeleteMovie(card._id);
+  };
+
+  useEffect(() => {
+    isSavedMovie();
+  }, [savedMovies]);
 
   return (
     <div className="card">
@@ -15,18 +45,25 @@ export default function MoviesCard({ card, btnType }) {
         <p className="card__duration">{card.duration} минута</p>
       </div>
       <img className="card__image" src={cardImage} alt={card.nameRU} />
-
-      {btnType === "saved" ? (
-        <button className="card__btn">
+      {type === "saved" ? (
+        <button className="card__btn" onClick={deleteMovie}>
           <img src={btnClose} alt="delete" />
         </button>
       ) : (
-        <button
-          className={`card__btn ${isSaved ? "card__btn_active" : ""}`}
-          onClick={() => setIsSaved(!isSaved)}
-        >
-          {isSaved ? <img src={btnAdded} alt="added" /> : "Сохранить"}
-        </button>
+        <>
+          {isSaved ? (
+            <button
+              className="card__btn card__btn_active"
+              onClick={deleteMovie}
+            >
+              <img src={btnAdded} alt="added" />
+            </button>
+          ) : (
+            <button className="card__btn" onClick={saveMovie}>
+              Сохранить
+            </button>
+          )}
+        </>
       )}
     </div>
   );

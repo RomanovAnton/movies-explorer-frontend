@@ -106,7 +106,12 @@ export default function Form({ type, onRegister, onLogin }) {
           </span>
         </div>
 
-        <button className={btnClass} type="submit" onClick={handleBtnClick}>
+        <button
+          className={btnClass}
+          type="submit"
+          onClick={handleBtnClick}
+          disabled={!formIsValid}
+        >
           {type === "register" ? "Зарегистрироваться" : "Войти"}
         </button>
       </form>

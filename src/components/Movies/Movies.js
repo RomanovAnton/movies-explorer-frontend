@@ -7,7 +7,7 @@ import { filterMovies } from "../../utils/filterMovies";
 import Preloader from "./Preloader/Preloader";
 import "./Movies.css";
 
-export default function Movies({ openPopup }) {
+export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
   const width = window.innerWidth;
   const [movies, setMovies] = useState([]);
   const [preloaderActive, setPreloaderActive] = useState(false);
@@ -75,7 +75,12 @@ export default function Movies({ openPopup }) {
           <Preloader />
         ) : (
           <>
-            <MoviesCardList movies={movies.slice(0, numDisplayedMovies)} />
+            <MoviesCardList
+              movies={movies.slice(0, numDisplayedMovies)}
+              type={"all"}
+              onDeleteMovie={onDeleteMovie}
+              onSaveMovie={onSaveMovie}
+            />
             {numDisplayedMovies < movies.length && numDisplayedMovies > 2 ? (
               <button className="movies__btn" onClick={addMovies}>
                 Еще
