@@ -4,6 +4,7 @@ import Footer from "../Footer/Footer";
 import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import { filterMovies } from "../../utils/filterMovies";
+import { ERROR_NOT_FOUND_SEARCH_TEXT } from "../../utils/constants/constants";
 import Preloader from "./Preloader/Preloader";
 import "./Movies.css";
 
@@ -21,6 +22,13 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
     const filteredMovies = filterMovies();
     setMovies(filteredMovies);
     determineWidth(window.innerWidth);
+
+    window.addEventListener("resize", (evt) => {
+      setTimeout(() => determineWidth(evt.target.innerWidth), 1000);
+    });
+    return window.removeEventListener("resize", (evt) => {
+      setTimeout(() => determineWidth(evt.target.innerWidth), 1000);
+    });
   }, []);
 
   const determineWidth = (width) => {
@@ -38,20 +46,11 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
     setNumAddedMovies(3);
   };
 
-  useEffect(() => {
-    window.addEventListener("resize", (evt) => {
-      setTimeout(() => determineWidth(evt.target.innerWidth), 1000);
-    });
-    return window.removeEventListener("resize", (evt) => {
-      setTimeout(() => determineWidth(evt.target.innerWidth), 1000);
-    });
-  }, []);
-
   const renderMovies = () => {
     const filteredMovies = filterMovies();
     setMovies(filteredMovies);
     if (filteredMovies.length === 0) {
-      openPopup("По вашему запросу ничего не найдено");
+      openPopup(ERROR_NOT_FOUND_SEARCH_TEXT);
       return;
     }
   };

@@ -1,7 +1,4 @@
-// ERRORS
-export const NOT_FOUND_ERROR_TEXT = "По данному запросу ничего не надйено";
-export const NOT_FOUND_ERROR_CODE = 404;
-
+// AUTH ERRORS
 export const UNAUTHORIZED_ERROR_TEXT = "Передан неверный логин или пароль";
 export const UNAUTHORIZED_ERROR_CODE = 401;
 
@@ -17,13 +14,8 @@ export const COMMON_ERROR_TEXT =
   "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз";
 export const COMMON_ERROR_CODE = 500;
 
-
-// MESSAGE
+// POPUP MESSAGE
 export const SUCCSESS_REGISTER_TEXT = "Вы успешно зарегистрировались!";
 export const SUCCSESS_UPDATE_PROFILE_TEXT = "Данные успешно изменены";
-
-
-
-
-//ERROR CODE
-//export const VALIDATION_ERROR_CODE = 400;
+export const ERROR_VALID_SEARCH_TEXT = "Нужно ввести ключевое слово";
+export const ERROR_NOT_FOUND_SEARCH_TEXT = "Ничего не найдено";

@@ -1,9 +1,10 @@
-import classNames from "classnames";
 import React, { useState, useEffect } from "react";
 import { getMovies } from "../../../utils/MoviesApi";
-import { COMMON_ERROR_TEXT } from "../../../utils/constants/constants";
+import {
+  COMMON_ERROR_TEXT,
+  ERROR_VALID_SEARCH_TEXT,
+} from "../../../utils/constants/constants";
 import "./SearchForm.css";
-
 export default function SearchForm({
   type,
   renderMovies,
@@ -14,48 +15,31 @@ export default function SearchForm({
 }) {
   const [inputValue, setInputValue] = useState("");
   const [checkboxValue, setCheckboxValue] = useState(false);
-  const [inputValueIsValid, setInputValueIsValid] = useState(false);
-
   const handleInputChange = (evt) => {
     setInputValue(evt.target.value);
   };
 
   const handleCheckboxChange = () => {
-    setCheckboxValue(!checkboxValue);
-    // localStorage.setItem("is-short-movies", checkboxValue ? "yes" : "no");
-    // renderMovies();
-  };
-
-  const btnClass = classNames("search-form__btn", {
-    "search-form__btn_disabled": !inputValueIsValid,
-  });
-
-  useEffect(() => {
     if (type === "all") {
-      const inputValue = localStorage.getItem("search-text");
-      const checkboxValue = localStorage.getItem("is-short-movies");
-      if (checkboxValue === "yes") {
-        setCheckboxValue(true);
-      } else {
-        setCheckboxValue(false);
-      }
-      setInputValue(inputValue);
+      localStorage.setItem("is-short-movies", checkboxValue ? "no" : "yes");
+      renderMovies();
+      setCheckboxValue(!checkboxValue);
     } else if (type === "saved") {
-      setInputValue("");
-      setCheckboxValue(false);
+      renderSavedMovies({
+        searchText: inputValue,
+        isShortMovies: checkboxValue,
+      });
+      setCheckboxValue(!checkboxValue);
     }
-  }, []);
-
-  useEffect(() => {
-    if (inputValue) {
-      setInputValueIsValid(true);
-    } else {
-      setInputValueIsValid(false);
-    }
-  }, [inputValue]);
+  };
 
   const handleSearchClick = (evt) => {
     evt.preventDefault();
+    if (!inputValue) {
+      openPopup(ERROR_VALID_SEARCH_TEXT);
+      return;
+    }
+
     if (type === "all") {
       localStorage.setItem("search-text", inputValue.toLowerCase());
       localStorage.setItem("is-short-movies", checkboxValue ? "yes" : "no");
@@ -82,6 +66,22 @@ export default function SearchForm({
     }
   };
 
+  useEffect(() => {
+    if (type === "all") {
+      const inputValue = localStorage.getItem("search-text");
+      const checkboxValue = localStorage.getItem("is-short-movies");
+      if (checkboxValue === "yes") {
+        setCheckboxValue(true);
+      } else {
+        setCheckboxValue(false);
+      }
+      setInputValue(inputValue);
+    } else if (type === "saved") {
+      setInputValue("");
+      setCheckboxValue(false);
+    }
+  }, []);
+
   return (
     <section className="search">
       <form className="search-form">
@@ -94,9 +94,8 @@ export default function SearchForm({
             onChange={handleInputChange}
           />
           <button
-            className={btnClass}
+            className="search-form__btn"
             onClick={handleSearchClick}
-            disabled={!inputValueIsValid}
           ></button>
         </div>
         <label className="checkbox">

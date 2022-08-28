@@ -31,7 +31,6 @@
 }
 
 .profile__btn_type_save {
-  margin-top: 205px;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
@@ -52,7 +51,8 @@
   cursor: default;
 }
 
-.profile__error {
+.profile__error_common {
+  margin-top: 205px;
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
@@ -65,7 +65,7 @@
     padding-top: 195px;
   }
 
-  .profile__btn_type_save {
+  .profile__error_common {
     margin-top: 195px;
   }
 }
@@ -74,7 +74,8 @@
   .profile__btn_type_edit {
     padding-top: 363px;
   }
-  .profile__btn_type_save {
-    margin-top: 363px;
+
+  .profile__error_common {
+    margin-top: px;
   }
 }

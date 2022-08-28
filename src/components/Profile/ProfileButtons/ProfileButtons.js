@@ -5,7 +5,6 @@ import "./ProfileButtons.css";
 export default function ProfileButtons({
   formStatusEdit,
   handleBtnClick,
-  error,
   onSignOut,
   formIsValid,
   authError,
@@ -13,17 +12,16 @@ export default function ProfileButtons({
   const classSaveBtn = classNames("profile__btn", "profile__btn_type_save", {
     "profile__btn_disabled": !formIsValid,
   });
-
   return (
     <>
       {formStatusEdit ? (
         <>
-          {error && <span className="profile__error">{authError || ""}</span>}
+          {<span className="profile__error_common">{authError}</span>}
           <button
             className={classSaveBtn}
             type="submit"
             onClick={handleBtnClick}
-            disabled={error}
+            disabled={!formIsValid}
           >
             Сохранить
           </button>

@@ -5,6 +5,7 @@ import SearchForm from "../Movies/SearchForm/SearchForm";
 import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import { SavedMoviesContext } from "../../contexts/SavedMoviesContext";
 import { filterSavedMovies } from "../../utils/filterMovies";
+import { ERROR_NOT_FOUND_SEARCH_TEXT } from "../../utils/constants/constants";
 import "./SavedMovies.css";
 
 export default function SavedMovies({ onDeleteMovie, openPopup }) {
@@ -13,8 +14,8 @@ export default function SavedMovies({ onDeleteMovie, openPopup }) {
 
   const renderSavedMovies = (searchData) => {
     const filteredMovies = filterSavedMovies(savedMovies, searchData);
-    if (!filteredMovies) {
-      openPopup("По вашему запросу ничего не найдено");
+    if (filteredMovies.length === 0) {
+      openPopup(ERROR_NOT_FOUND_SEARCH_TEXT);
       return;
     }
     setDisplayMovies(filteredMovies);
@@ -27,7 +28,11 @@ export default function SavedMovies({ onDeleteMovie, openPopup }) {
     <>
       <Header loggedIn={true} />
       <main className="main">
-        <SearchForm type={"saved"} renderSavedMovies={renderSavedMovies} />
+        <SearchForm
+          type={"saved"}
+          renderSavedMovies={renderSavedMovies}
+          openPopup={openPopup}
+        />
         {savedMovies ? (
           <MoviesCardList
             movies={displayMovies}

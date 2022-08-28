@@ -13,7 +13,6 @@ export default function Profile({
 }) {
   const currentUser = useContext(CurrentUserContext);
   const [formStatusEdit, setFormStatusEdit] = useState(false);
-  const [error, setError] = useState(false);
   const [formParams, setFormParams] = useState({
     name: currentUser.name,
     email: currentUser.email,
@@ -46,15 +45,14 @@ export default function Profile({
     }
   };
 
-  const handleBtnClick = async (evt) => {
-    evt.preventDefault();
+  const handleBtnClick = (evt) => {
     if (formStatusEdit) {
-      await onUpdate(formParams);
-      if(authError) {
-        return
-      }
+      evt.preventDefault();
+      onUpdate(formParams);
+    } else {
+      setFormStatusEdit(!formStatusEdit);
+      setFormIsValid(false);
     }
-    setFormStatusEdit(!formStatusEdit);
   };
 
   const inputNameClass = classNames("profile__input", {
@@ -100,9 +98,7 @@ export default function Profile({
                 disabled={!formStatusEdit}
               />
             </fieldset>
-            <span className="profile__error">
-              {errorMessage.name || ""}
-            </span>
+            <span className="profile__error">{errorMessage.name || ""}</span>
 
             <fieldset className="profile__fieldset">
               <label className="profile__label">E-mail</label>
@@ -119,13 +115,10 @@ export default function Profile({
                 disabled={!formStatusEdit}
               />
             </fieldset>
-            <span className="profile__error">
-              {errorMessage.email || ""}
-            </span>
+            <span className="profile__error">{errorMessage.email || ""}</span>
             <ProfileButtons
               formStatusEdit={formStatusEdit}
               handleBtnClick={handleBtnClick}
-              error={error}
               onSignOut={onSignOut}
               formIsValid={formIsValid}
               authError={authError}
