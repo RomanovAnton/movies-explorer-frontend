@@ -13,11 +13,11 @@ export default function SavedMovies({ onDeleteMovie, openPopup }) {
 
   const renderSavedMovies = (searchData) => {
     const filteredMovies = filterSavedMovies(savedMovies, searchData);
-    setDisplayMovies(filteredMovies);
-    if (filteredMovies.length === 0) {
+    if (!filteredMovies) {
       openPopup("По вашему запросу ничего не найдено");
       return;
     }
+    setDisplayMovies(filteredMovies);
   };
   useEffect(() => {
     setDisplayMovies(savedMovies);

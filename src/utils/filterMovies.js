@@ -15,16 +15,20 @@ export const filterMovies = () => {
 };
 
 export const filterSavedMovies = (savedMovies, searchData) => {
+  let moviesArr;
   const { searchText, isShortMovies } = searchData;
-  const moviesArr = savedMovies.filter((movie) =>
+  moviesArr = savedMovies.filter((movie) =>
     movie.nameRU.toLowerCase().includes(searchText)
   );
 
   if (isShortMovies === "yes") {
-    return moviesArr.filter((movie) => movie.duration <= 40);
-  } else {
+    moviesArr.filter((movie) => movie.duration <= 40);
+  }
+
+  if (moviesArr.length > 0) {
     return moviesArr;
   }
 };
 
 //можно объединить в зависимсоти от типа логика
+// если filterSavedMovies ничего не возвращает то отобразить сохраненные фильмы и открыть попап с ошибкой

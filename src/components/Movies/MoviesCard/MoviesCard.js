@@ -43,7 +43,15 @@ export default function MoviesCard({ card, type, onSaveMovie, onDeleteMovie }) {
         <p className="card__title">{card.nameRU}</p>
         <p className="card__duration">{card.duration} минута</p>
       </div>
-      <img className="card__image" src={cardImage} alt={card.nameRU} />
+      <a
+        href={card.trailerLink}
+        target="_blank"
+        className="card__link"
+        rel="noreferrer"
+      >
+        <img className="card__image" src={cardImage} alt={card.nameRU} />
+      </a>
+
       {type === "saved" ? (
         <button className="card__btn" onClick={deleteMovie}>
           <img src={btnClose} alt="delete" />

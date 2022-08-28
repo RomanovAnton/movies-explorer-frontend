@@ -8,6 +8,7 @@ import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import Popup from "../Popup/Popup";
+import { ProtectedRoute } from "../../components/ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { SavedMoviesContext } from "../../contexts/SavedMoviesContext";
 import {
@@ -37,6 +38,11 @@ export default function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [popupIsOpen, setPopupIsOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
+  const [authError, setAuthError] = useState("");
+
+  const resetError = () => {
+    setAuthError("");
+  };
 
   useEffect(() => {
     getProfileData();
@@ -79,9 +85,9 @@ export default function App() {
       })
       .catch((errCode) => {
         if (errCode === CONFLICT_ERROR_CODE) {
-          openPopup(CONFLICT_ERROR_TEXT);
+          setAuthError(CONFLICT_ERROR_TEXT);
         } else {
-          openPopup(COMMON_ERROR_TEXT);
+          setAuthError(COMMON_ERROR_TEXT);
         }
       });
   };
@@ -97,7 +103,7 @@ export default function App() {
       })
       .catch((errCode) => {
         if (errCode === UNAUTHORIZED_ERROR_CODE) {
-          openPopup(UNAUTHORIZED_ERROR_TEXT);
+          setAuthError(UNAUTHORIZED_ERROR_TEXT);
         } else {
           openPopup(COMMON_ERROR_TEXT);
         }
@@ -118,7 +124,7 @@ export default function App() {
         openPopup(SUCCSESS_UPDATE_PROFILE_TEXT);
       })
       .catch(() => {
-        openPopup(COMMON_ERROR_TEXT);
+        setAuthError(COMMON_ERROR_TEXT);
       });
   };
 
@@ -143,32 +149,64 @@ export default function App() {
           <Routes>
             <Route exact path="/" element={<Main loggedIn={loggedIn} />} />
             <Route
-              path="/movies"
+              path="/sign-up"
               element={
-                <Movies
-                  openPopup={openPopup}
-                  onSaveMovie={handleSaveMovie}
-                  onDeleteMovie={handleDeleteMovie}
+                <Register
+                  onRegister={handleRegister}
+                  authError={authError}
+                  onResetError={resetError}
                 />
               }
             />
             <Route
-              path="/saved-movies"
-              element={<SavedMovies onDeleteMovie={handleDeleteMovie} openPopup={openPopup} />}
-            />
-            <Route
-              path="/sign-up"
-              element={<Register onRegister={handleRegister} />}
-            />
-            <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
-            <Route
-              path="/profile"
+              path="/sign-in"
               element={
-                <Profile onSignOut={signOut} onUpdate={handleUpdateProfile} />
+                <Login
+                  onLogin={handleLogin}
+                  authError={authError}
+                  onResetError={resetError}
+                />
               }
             />
             <Route path="*" element={<NotFoundPage />} />
+            <Route
+              path="/movies"
+              element={
+                <ProtectedRoute loggedIn={loggedIn}>
+                  <Movies
+                    openPopup={openPopup}
+                    onSaveMovie={handleSaveMovie}
+                    onDeleteMovie={handleDeleteMovie}
+                  />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/saved-movies"
+              element={
+                <ProtectedRoute loggedIn={loggedIn}>
+                  <SavedMovies
+                    onDeleteMovie={handleDeleteMovie}
+                    openPopup={openPopup}
+                  />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute loggedIn={loggedIn}>
+                  <Profile
+                    onSignOut={signOut}
+                    onUpdate={handleUpdateProfile}
+                    authError={authError}
+                    onResetError={resetError}
+                  />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
+
           <Popup
             isOpen={popupIsOpen}
             message={popupMessage}

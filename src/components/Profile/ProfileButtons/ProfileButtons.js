@@ -7,22 +7,18 @@ export default function ProfileButtons({
   handleBtnClick,
   error,
   onSignOut,
+  formIsValid,
+  authError,
 }) {
-  const classSaveBtn = classNames("profile__btn", {
-    "profile__btn_type_save profile__btn_disabled": error,
-    "profile__btn_type_save": true,
+  const classSaveBtn = classNames("profile__btn", "profile__btn_type_save", {
+    "profile__btn_disabled": !formIsValid,
   });
-
 
   return (
     <>
       {formStatusEdit ? (
         <>
-          {error && (
-            <span className="profile__error">
-              При обновлении профиля произошла ошибка.
-            </span>
-          )}
+          {error && <span className="profile__error">{authError || ""}</span>}
           <button
             className={classSaveBtn}
             type="submit"

@@ -1,10 +1,16 @@
 import classNames from "classnames";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Form.css";
 
-export default function Form({ type, onRegister, onLogin }) {
+export default function Form({
+  type,
+  onRegister,
+  onLogin,
+  authError,
+  onResetError,
+}) {
   const [formIsValid, setFormIsValid] = useState(false);
   const [formParams, setFormParams] = useState({
     name: "",
@@ -52,6 +58,30 @@ export default function Form({ type, onRegister, onLogin }) {
     "form__button_disabled": !formIsValid,
   });
 
+  const inputNameClass = classNames("form__input", {
+    "form__input_error": errorMessage.name,
+  });
+
+  const inputEmailClass = classNames("form__input", "form__input_text_bold", {
+    "form__input_error": errorMessage.email,
+  });
+
+  const inputPasswordClass = classNames("form__input", {
+    "form__input_error": errorMessage.password,
+  });
+
+  useEffect(() => {
+    if (authError) {
+      onResetError();
+    }
+  }, [formParams]);
+
+  useEffect(() => {
+    if (authError) {
+      setFormIsValid(false);
+    }
+  }, [authError]);
+
   return (
     <section className="form-container">
       <h1 className="form-container__title">
@@ -64,14 +94,16 @@ export default function Form({ type, onRegister, onLogin }) {
               <label className="form__label">Имя</label>
               <input
                 type="text"
-                className="form__input"
+                className={inputNameClass}
                 name="name"
                 minLength={2}
                 maxLength={30}
+                pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
                 required
                 value={formParams.name}
                 onChange={handleChangeFormParam}
               />
+              <span className="form__error">{errorMessage.name}</span>
             </fieldset>
           ) : null}
 
@@ -79,21 +111,23 @@ export default function Form({ type, onRegister, onLogin }) {
             <label className="form__label">Email</label>
             <input
               type="email"
-              className="form__input form__input_text_bold"
+              className={inputEmailClass}
               name="email"
               minLength={2}
               maxLength={30}
+              pattern={"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"}
               required
               value={formParams.email}
               onChange={handleChangeFormParam}
             />
+            <span className="form__error">{errorMessage.email}</span>
           </fieldset>
 
           <fieldset className="form__fieldset">
             <label className="form__label">Пароль</label>
             <input
               type="password"
-              className="form__input form__input_error"
+              className={inputPasswordClass}
               name="password"
               value={formParams.password}
               onChange={handleChangeFormParam}
@@ -101,11 +135,11 @@ export default function Form({ type, onRegister, onLogin }) {
             />
           </fieldset>
 
-          <span className="form__error">
-            {errorMessage.name || errorMessage.email || errorMessage.password}
-          </span>
+          <span className="form__error">{errorMessage.password}</span>
         </div>
-
+        <span className="form__error form__error_common">
+          {authError || ""}
+        </span>
         <button
           className={btnClass}
           type="submit"
