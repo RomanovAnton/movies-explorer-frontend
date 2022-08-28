@@ -33,6 +33,14 @@ export default function MoviesCard({ card, type, onSaveMovie, onDeleteMovie }) {
     onDeleteMovie(card._id);
   };
 
+  const declOfNum = (number, words) => {
+    return words[
+      number % 100 > 4 && number % 100 < 20
+        ? 2
+        : [2, 0, 1, 1, 1, 2][number % 10 < 5 ? Math.abs(number) % 10 : 5]
+    ];
+  };
+
   useEffect(() => {
     isSavedMovie();
   }, [savedMovies]);
@@ -41,7 +49,13 @@ export default function MoviesCard({ card, type, onSaveMovie, onDeleteMovie }) {
     <div className="card">
       <div className="card__info">
         <p className="card__title">{card.nameRU}</p>
-        <p className="card__duration">{card.duration} минута</p>
+        <p className="card__duration">
+          {`${card.duration} ${declOfNum(card.duration, [
+            "минута",
+            "минуты",
+            "минут",
+          ])}`}{" "}
+        </p>
       </div>
       <a
         href={card.trailerLink}

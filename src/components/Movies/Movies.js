@@ -8,7 +8,6 @@ import Preloader from "./Preloader/Preloader";
 import "./Movies.css";
 
 export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
-  const width = window.innerWidth;
   const [movies, setMovies] = useState([]);
   const [preloaderActive, setPreloaderActive] = useState(false);
   const [numDisplayedMovies, setNumDisplayedMovies] = useState(0);
@@ -21,11 +20,10 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
     }
     const filteredMovies = filterMovies();
     setMovies(filteredMovies);
+    determineWidth(window.innerWidth);
   }, []);
 
-  useEffect(() => determineWidth(), [width]);
-
-  const determineWidth = () => {
+  const determineWidth = (width) => {
     if (width < 481) {
       setNumDisplayedMovies(5);
       setNumAddedMovies(2);
@@ -39,6 +37,15 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
     setNumDisplayedMovies(12);
     setNumAddedMovies(3);
   };
+
+  useEffect(() => {
+    window.addEventListener("resize", (evt) => {
+      setTimeout(() => determineWidth(evt.target.innerWidth), 1000);
+    });
+    return window.removeEventListener("resize", (evt) => {
+      setTimeout(() => determineWidth(evt.target.innerWidth), 1000);
+    });
+  }, []);
 
   const renderMovies = () => {
     const filteredMovies = filterMovies();
@@ -70,7 +77,7 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
           openPopup={openPopup}
           openPreloader={openPreloader}
           closePreloader={closePreloader}
-          type={'all'}
+          type={"all"}
         />
         {preloaderActive ? (
           <Preloader />
