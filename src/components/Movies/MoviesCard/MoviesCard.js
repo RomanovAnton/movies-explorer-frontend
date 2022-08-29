@@ -16,7 +16,7 @@ export default function MoviesCard({ card, type, onSaveMovie, onDeleteMovie }) {
   const saveMovie = () => {
     onSaveMovie(card);
   };
-
+ 
   const isSavedMovie = () => {
     const isSaved = savedMovies.find((item) => item.movieId === card.id);
     setIsSaved(isSaved);
@@ -46,7 +46,7 @@ export default function MoviesCard({ card, type, onSaveMovie, onDeleteMovie }) {
   }, [savedMovies]);
 
   return (
-    <div className="card">
+    <div className="card" onClick={() => console.log(card)}>
       <div className="card__info">
         <p className="card__title">{card.nameRU}</p>
         <p className="card__duration">

@@ -14,15 +14,16 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
   const [numDisplayedMovies, setNumDisplayedMovies] = useState(0);
   const [numAddedMovies, setNumAddedMovies] = useState(0);
 
+  console.log(movies);
+
   useEffect(() => {
     const serverData = localStorage.getItem("all-movies");
-    if (!serverData) {
-      return;
+    if (serverData) {
+      const filteredMovies = filterMovies();
+      setMovies(filteredMovies);
     }
-    const filteredMovies = filterMovies();
-    setMovies(filteredMovies);
-    determineWidth(window.innerWidth);
 
+    determineWidth(window.innerWidth);
     window.addEventListener("resize", (evt) => {
       setTimeout(() => determineWidth(evt.target.innerWidth), 1000);
     });

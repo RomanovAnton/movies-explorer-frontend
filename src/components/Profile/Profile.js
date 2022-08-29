@@ -48,7 +48,7 @@ export default function Profile({
   const handleBtnClick = (evt) => {
     if (formStatusEdit) {
       evt.preventDefault();
-      onUpdate(formParams);
+      onUpdate(formParams)
     } else {
       setFormStatusEdit(!formStatusEdit);
       setFormIsValid(false);

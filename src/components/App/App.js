@@ -118,6 +118,7 @@ export default function App() {
   };
 
   const handleUpdateProfile = (data) => {
+    //сделать через async await
     updateProfile(data)
       .then((res) => {
         setCurrentUser(res);

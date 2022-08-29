@@ -33,7 +33,7 @@ export default function SavedMovies({ onDeleteMovie, openPopup }) {
           renderSavedMovies={renderSavedMovies}
           openPopup={openPopup}
         />
-        {savedMovies ? (
+        {savedMovies.length !== 0 ? (
           <MoviesCardList
             movies={displayMovies}
             type={"saved"}

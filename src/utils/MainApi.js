@@ -41,7 +41,7 @@ export const updateProfile = (data) => {
     method: "PATCH",
     headers: {
       "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(data),
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
@@ -57,7 +57,7 @@ export const addSavedMovie = (data) => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      country: data.country,
+      country: data.country || "unkown",
       director: data.director,
       duration: data.duration,
       year: data.year,

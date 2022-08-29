@@ -21,9 +21,14 @@ export default function SearchForm({
 
   const handleCheckboxChange = () => {
     if (type === "all") {
-      localStorage.setItem("is-short-movies", checkboxValue ? "no" : "yes");
-      renderMovies();
-      setCheckboxValue(!checkboxValue);
+      if (localStorage.getItem("all-movies")) {
+        localStorage.setItem("is-short-movies", checkboxValue ? "no" : "yes");
+        renderMovies();
+        setCheckboxValue(!checkboxValue);
+      } else {
+        openPopup("не найдено");
+        return;
+      }
     } else if (type === "saved") {
       renderSavedMovies({
         searchText: inputValue,
