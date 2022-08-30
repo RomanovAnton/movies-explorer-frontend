@@ -1,5 +1,5 @@
 const options = {
-  baseUrl: "http://movies.rmv.api.nomoredomains.sbs",
+  baseUrl: "https://movies.rmv.api.nomoredomains.sbs",
   headers: {
     "Content-type": "application/json",
   },
@@ -72,7 +72,6 @@ export const addSavedMovie = (data) => {
 };
 
 export const deleteSavedMovie = (_id) => {
-  console.log(_id);
   const token = localStorage.getItem("token");
   return fetch(`${options.baseUrl}/movies/${_id}`, {
     method: "DELETE",
