@@ -80,6 +80,7 @@ export default function Profile({
                 maxLength={30}
                 pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
                 required
+                placeholder="name"
                 value={formParams.name}
                 onChange={handleChangeFormParam}
               />
@@ -96,6 +97,7 @@ export default function Profile({
                 maxLength={30}
                 pattern={"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"}
                 required
+                placeholder="email"
                 value={formParams.email}
                 onChange={handleChangeFormParam}
               />

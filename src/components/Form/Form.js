@@ -97,6 +97,7 @@ export default function Form({
                 required
                 value={formParams.name}
                 onChange={handleChangeFormParam}
+                placeholder="name"
               />
               <span className="form__error">{errorMessage.name}</span>
             </fieldset>
@@ -114,6 +115,7 @@ export default function Form({
               required
               value={formParams.email}
               onChange={handleChangeFormParam}
+              placeholder="email"
             />
             <span className="form__error">{errorMessage.email}</span>
           </fieldset>
@@ -127,6 +129,7 @@ export default function Form({
               value={formParams.password}
               onChange={handleChangeFormParam}
               required
+              placeholder="password"
             />
           </fieldset>
 
