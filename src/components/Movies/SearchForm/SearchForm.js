@@ -3,6 +3,7 @@ import { getMovies } from "../../../utils/MoviesApi";
 import {
   COMMON_ERROR_TEXT,
   ERROR_VALID_SEARCH_TEXT,
+  ERROR_NOT_FOUND_SEARCH_TEXT,
 } from "../../../utils/constants/constants";
 import "./SearchForm.css";
 export default function SearchForm({
@@ -26,7 +27,7 @@ export default function SearchForm({
         renderMovies();
         setCheckboxValue(!checkboxValue);
       } else {
-        openPopup("не найдено");
+        openPopup(ERROR_NOT_FOUND_SEARCH_TEXT);
         return;
       }
     } else if (type === "saved") {

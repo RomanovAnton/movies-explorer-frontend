@@ -44,7 +44,7 @@
 .popup__close {
   position: absolute;
   top: -34px;
-  left: 430px;
+  left: 460px;
   color: #ffff;
   font-size: 35px;
   transition: 0.3s;
@@ -62,6 +62,6 @@
 
   .popup__close {
     top: -32px;
-    left: 247px;
+    left: 280px;
   }
 }

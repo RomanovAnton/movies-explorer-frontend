@@ -55,11 +55,9 @@ export default function App() {
         .then((res) => {
           setLoggedIn(true);
           setCurrentUser(res);
-          getSavedMovies()
-            .then((res) => {
-              setSavedMovies(res);
-            })
-            .catch(() => console.log("Сохраненных фильмов пока нет")); // будет ли прилетать в catch если список пуст
+          getSavedMovies().then((res) => {
+            setSavedMovies(res);
+          });
           navigate("/movies");
         })
         .catch((errCode) => console.log(errCode));
@@ -76,12 +74,11 @@ export default function App() {
     setPopupIsOpen(true);
   };
 
-  const handleRegister = async (data) => {
-    await register(data)
+  const handleRegister = (data) => {
+    register(data)
       .then((res) => {
         openPopup(SUCCSESS_REGISTER_TEXT);
         handleLogin(data);
-        // setTimeout(closePopup, 1000);
       })
       .catch((errCode) => {
         if (errCode === CONFLICT_ERROR_CODE) {
@@ -118,14 +115,17 @@ export default function App() {
   };
 
   const handleUpdateProfile = (data) => {
-    //сделать через async await
     updateProfile(data)
       .then((res) => {
         setCurrentUser(res);
         openPopup(SUCCSESS_UPDATE_PROFILE_TEXT);
       })
-      .catch(() => {
-        setAuthError(COMMON_ERROR_TEXT);
+      .catch((errCode) => {
+        if (errCode === CONFLICT_ERROR_CODE) {
+          setAuthError(CONFLICT_ERROR_TEXT);
+        } else {
+          setAuthError(COMMON_ERROR_TEXT);
+        }
       });
   };
 

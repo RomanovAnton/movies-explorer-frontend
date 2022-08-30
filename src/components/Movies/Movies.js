@@ -14,8 +14,6 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
   const [numDisplayedMovies, setNumDisplayedMovies] = useState(0);
   const [numAddedMovies, setNumAddedMovies] = useState(0);
 
-  console.log(movies);
-
   useEffect(() => {
     const serverData = localStorage.getItem("all-movies");
     if (serverData) {

@@ -2,7 +2,6 @@ const options = {
   baseUrl: "http://movies.rmv.api.nomoredomains.sbs",
   headers: {
     "Content-type": "application/json",
-    // Accept: "application/json",
   },
 };
 
@@ -41,7 +40,7 @@ export const updateProfile = (data) => {
     method: "PATCH",
     headers: {
       "Content-type": "application/json",
-      // Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(data),
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
