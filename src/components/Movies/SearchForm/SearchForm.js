@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getMovies } from "../../../utils/MoviesApi";
+import { SavedMoviesContext } from "../../../contexts/SavedMoviesContext";
 import {
   COMMON_ERROR_TEXT,
   ERROR_VALID_SEARCH_TEXT,
@@ -11,11 +12,11 @@ export default function SearchForm({
   renderMovies,
   renderSavedMovies,
   openPopup,
-  openPreloader,
-  closePreloader,
+  setPreloader
 }) {
   const [inputValue, setInputValue] = useState("");
   const [checkboxValue, setCheckboxValue] = useState(false);
+  const savedMovies = useContext(SavedMoviesContext);
   const handleInputChange = (evt) => {
     setInputValue(evt.target.value);
   };
@@ -31,9 +32,12 @@ export default function SearchForm({
         return;
       }
     } else if (type === "saved") {
+      if (savedMovies.length === 0) {
+        return;
+      }
       renderSavedMovies({
         searchText: inputValue,
-        isShortMovies: checkboxValue,
+        isShortMovies: !checkboxValue ? "yes" : "no",
       });
       setCheckboxValue(!checkboxValue);
     }
@@ -51,7 +55,7 @@ export default function SearchForm({
       localStorage.setItem("is-short-movies", checkboxValue ? "yes" : "no");
       const serverData = localStorage.getItem("all-movies");
       if (!serverData) {
-        openPreloader();
+        setPreloader(true);
         getMovies()
           .then((res) => {
             localStorage.setItem("all-movies", JSON.stringify(res));
@@ -60,14 +64,14 @@ export default function SearchForm({
             renderMovies();
           })
           .catch(() => openPopup(COMMON_ERROR_TEXT))
-          .finally(() => closePreloader());
+          .finally(() => setPreloader(false));
       } else {
         renderMovies();
       }
     } else if (type === "saved") {
       renderSavedMovies({
         searchText: inputValue,
-        isShortMovies: checkboxValue,
+        isShortMovies: !checkboxValue ? "no" : "false",
       });
     }
   };
@@ -107,7 +111,7 @@ export default function SearchForm({
         <label className="checkbox">
           <input
             type="checkbox"
-            checked={checkboxValue ?? false}
+            checked={checkboxValue}
             className="checkbox__input"
             onChange={handleCheckboxChange}
           />

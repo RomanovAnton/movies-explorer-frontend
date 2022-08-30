@@ -46,18 +46,12 @@ export default function Profile({
   const handleBtnClick = (evt) => {
     evt.preventDefault();
     onUpdate(formParams);
+    setFormIsValid(false);
   };
 
-  const inputNameClass = classNames("profile__input", {
+  const inputClass = classNames("profile__input", {
     "profile__input_error": errorMessage.name,
   });
-  const inputEmailClass = classNames(
-    "profile__input",
-    "profile__input_text_bold",
-    {
-      "profile__input_error": errorMessage.email,
-    }
-  );
   const classBtn = classNames("profile__btn", "profile__btn_type_edit", {
     "profile__btn_disabled": !formIsValid,
   });
@@ -65,12 +59,6 @@ export default function Profile({
   useEffect(() => {
     onResetError();
   }, [formParams]);
-
-  useEffect(() => {
-    if (authError) {
-      setFormIsValid(false);
-    }
-  }, [authError]);
 
   return (
     <>
@@ -85,7 +73,7 @@ export default function Profile({
             <fieldset className="profile__fieldset">
               <label className="profile__label">Имя</label>
               <input
-                className={inputNameClass}
+                className={inputClass}
                 name="name"
                 type="text"
                 minLength={2}
@@ -101,7 +89,7 @@ export default function Profile({
             <fieldset className="profile__fieldset">
               <label className="profile__label">E-mail</label>
               <input
-                className={inputEmailClass}
+                className={inputClass}
                 name="email"
                 type="email"
                 minLength={2}

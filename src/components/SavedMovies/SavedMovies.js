@@ -4,7 +4,7 @@ import Footer from "../Footer/Footer";
 import SearchForm from "../Movies/SearchForm/SearchForm";
 import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import { SavedMoviesContext } from "../../contexts/SavedMoviesContext";
-import { filterSavedMovies } from "../../utils/filterMovies";
+import { filterMovies } from "../../utils/filterMovies";
 import { ERROR_NOT_FOUND_SEARCH_TEXT } from "../../utils/constants/constants";
 import "./SavedMovies.css";
 
@@ -13,7 +13,11 @@ export default function SavedMovies({ onDeleteMovie, openPopup }) {
   const [displayMovies, setDisplayMovies] = useState(savedMovies);
 
   const renderSavedMovies = (searchData) => {
-    const filteredMovies = filterSavedMovies(savedMovies, searchData);
+    const filteredMovies = filterMovies(
+      savedMovies,
+      searchData.isShortMovies,
+      searchData.searchText
+    );
     if (filteredMovies.length === 0) {
       openPopup(ERROR_NOT_FOUND_SEARCH_TEXT);
       return;

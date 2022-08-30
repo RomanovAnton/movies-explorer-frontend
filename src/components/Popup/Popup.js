@@ -6,9 +6,7 @@ export default function Popup({ isOpen, message, closePopup }) {
     <div className={`popup ${isOpen ? "popup__opened" : ""}`}>
       <div className="popup__container">
         <p className="popup__message">{message}</p>
-        <div className="popup__close" onClick={closePopup}>
-          ⮿
-        </div>
+        <div className="popup__close" onClick={closePopup}></div>
       </div>
     </div>
   );

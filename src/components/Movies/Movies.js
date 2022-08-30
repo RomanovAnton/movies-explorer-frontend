@@ -15,9 +15,11 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
   const [numAddedMovies, setNumAddedMovies] = useState(0);
 
   useEffect(() => {
-    const serverData = localStorage.getItem("all-movies");
-    if (serverData) {
-      const filteredMovies = filterMovies();
+    const movies = JSON.parse(localStorage.getItem("all-movies"));
+    const isShortMovies = localStorage.getItem("is-short-movies");
+    const searchText = localStorage.getItem("search-text");
+    if (movies && isShortMovies && searchText) {
+      const filteredMovies = filterMovies(movies, isShortMovies, searchText);
       setMovies(filteredMovies);
     }
 
@@ -46,7 +48,10 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
   };
 
   const renderMovies = () => {
-    const filteredMovies = filterMovies();
+    const movies = JSON.parse(localStorage.getItem("all-movies"));
+    const isShortMovies = localStorage.getItem("is-short-movies");
+    const searchText = localStorage.getItem("search-text");
+    const filteredMovies = filterMovies(movies, isShortMovies, searchText);
     setMovies(filteredMovies);
     if (filteredMovies.length === 0) {
       openPopup(ERROR_NOT_FOUND_SEARCH_TEXT);
@@ -58,14 +63,6 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
     setNumDisplayedMovies((prev) => prev + numAddedMovies);
   };
 
-  const openPreloader = () => {
-    setPreloaderActive(true);
-  };
-
-  const closePreloader = () => {
-    setPreloaderActive(false);
-  };
-
   return (
     <>
       <Header loggedIn={true} />
@@ -73,8 +70,7 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
         <SearchForm
           renderMovies={renderMovies}
           openPopup={openPopup}
-          openPreloader={openPreloader}
-          closePreloader={closePreloader}
+          setPreloader={setPreloaderActive}
           type={"all"}
         />
         {preloaderActive ? (

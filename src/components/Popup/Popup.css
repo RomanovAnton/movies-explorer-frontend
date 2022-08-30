@@ -42,13 +42,18 @@
 }
 
 .popup__close {
+  background-image: url(../../images/Close\ Icon.svg);
+  background-color: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 20px;
+  height: 20px;
   position: absolute;
   top: -34px;
   left: 460px;
-  color: #ffff;
   font-size: 35px;
   transition: 0.3s;
-  cursor: default;
+  cursor: pointer;
 }
 
 .popup__close:hover {

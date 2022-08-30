@@ -52,6 +52,7 @@ export default function Form({
     } else {
       onLogin(formParams);
     }
+    setFormIsValid(false);
   };
 
   const btnClass = classNames("form__button", {
@@ -75,12 +76,6 @@ export default function Form({
       onResetError();
     }
   }, [formParams]);
-
-  useEffect(() => {
-    if (authError) {
-      setFormIsValid(false);
-    }
-  }, [authError]);
 
   return (
     <section className="form-container">
