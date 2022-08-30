@@ -8,7 +8,6 @@ import Footer from "../Footer/Footer";
 import "./Main.css";
 
 export default function Main({ loggedIn }) {
-  const perem = 4;
   return (
     <div className="content">
       <Header theme={"dark"} loggedIn={loggedIn} />
