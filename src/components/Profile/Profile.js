@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import classNames from "classnames";
 import Header from "../Header/Header";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./Profile.css";
-import useValidation from "../../hooks/useValidation";
+import useForm from "../../hooks/useForm";
 
 export default function Profile({
   onSignOut,
@@ -11,51 +11,36 @@ export default function Profile({
   authError,
   onResetError,
 }) {
-  const { errorMessage, formIsValid, setFormIsValid, checkErrors } =
-    useValidation();
   const currentUser = useContext(CurrentUserContext);
-  const [formParams, setFormParams] = useState({
-    name: currentUser.name,
-    email: currentUser.email,
-  });
+  const form = useForm();
 
-  const handleChangeFormParam = (evt) => {
-    const { name, value } = evt.target;
-    const form = evt.target.closest(".profile__form");
-    setFormParams((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  useEffect(() => {
+    form.setFormParams({ name: currentUser.name, email: currentUser.email });
+  }, [currentUser]);
 
   const handleBtnClick = (evt) => {
     evt.preventDefault();
-    onUpdate(formParams);
-    setFormIsValid(false);
+    onUpdate(form.formParams);
+    form.setFormIsValid(false);
   };
 
   const inputClass = classNames("profile__input", {
-    "profile__input_error": errorMessage.name,
+    "profile__input_error": form.errorMessage.name,
   });
   const classBtn = classNames("profile__btn", "profile__btn_type_edit", {
-    "profile__btn_disabled": !formIsValid,
+    "profile__btn_disabled": !form.formIsValid,
   });
 
   useEffect(() => {
     onResetError();
-  }, [formParams]);
+  }, [form.formParams]);
 
   return (
     <>
       <Header loggedIn={true} />
       <main className="profile">
         <section className="profile__container">
-          <form
-            className="profile__form"
-            name="edit-form"
-            noValidate
-            onChange={checkErrors}
-          >
+          <form className="profile__form" name="form" noValidate>
             <h1 className="profile__title">
               {`Привет, ${currentUser.name || ""}`}
             </h1>
@@ -71,11 +56,13 @@ export default function Profile({
                 pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
                 required
                 placeholder="name"
-                value={formParams.name}
-                onChange={handleChangeFormParam}
+                value={form.formParams.name}
+                onChange={form.handleChangeValue}
               />
             </fieldset>
-            <span className="profile__error">{errorMessage.name || ""}</span>
+            <span className="profile__error">
+              {form.errorMessage.name || ""}
+            </span>
 
             <fieldset className="profile__fieldset">
               <label className="profile__label">E-mail</label>
@@ -88,11 +75,13 @@ export default function Profile({
                 pattern={"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"}
                 required
                 placeholder="email"
-                value={formParams.email}
-                onChange={handleChangeFormParam}
+                value={form.formParams.email}
+                onChange={form.handleChangeValue}
               />
             </fieldset>
-            <span className="profile__error">{errorMessage.email || ""}</span>
+            <span className="profile__error">
+              {form.errorMessage.email || ""}
+            </span>
 
             <span className="profile__error_common">{authError}</span>
 
@@ -100,7 +89,7 @@ export default function Profile({
               className={classBtn}
               type="submit"
               onClick={handleBtnClick}
-              disabled={!formIsValid}
+              disabled={!form.formIsValid}
             >
               Редактировать
             </button>

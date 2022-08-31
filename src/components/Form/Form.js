@@ -1,8 +1,7 @@
 import classNames from "classnames";
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import useValidation from "../../hooks/useValidation";
+import useForm from "../../hooks/useForm";
 import "./Form.css";
 
 export default function Form({
@@ -12,62 +11,46 @@ export default function Form({
   authError,
   onResetError,
 }) {
-  const { errorMessage, formIsValid, setFormIsValid, checkErrors } =
-    useValidation();
-
-  const [formParams, setFormParams] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
-  const handleChangeFormParam = (evt) => {
-    const { name, value } = evt.target;
-    const form = evt.target.closest("form");
-    setFormParams((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const form = useForm();
 
   const handleBtnClick = (evt) => {
     evt.preventDefault();
     if (type === "register") {
-      onRegister(formParams);
+      onRegister(form.formParams);
     } else {
-      onLogin(formParams);
+      onLogin(form.formParams);
     }
-    setFormIsValid(false);
+    form.setFormIsValid(false);
   };
 
   const btnClass = classNames("form__button", {
-    "form__button_disabled": !formIsValid,
+    "form__button_disabled": !form.formIsValid,
   });
 
   const inputNameClass = classNames("form__input", {
-    "form__input_error": errorMessage.name,
+    "form__input_error": form.errorMessage.name,
   });
 
   const inputEmailClass = classNames("form__input", "form__input_text_bold", {
-    "form__input_error": errorMessage.email,
+    "form__input_error": form.errorMessage.email,
   });
 
   const inputPasswordClass = classNames("form__input", {
-    "form__input_error": errorMessage.password,
+    "form__input_error": form.errorMessage.password,
   });
 
   useEffect(() => {
     if (authError) {
       onResetError();
     }
-  }, [formParams]);
+  }, [form.formParams]);
 
   return (
     <section className="form-container">
       <h1 className="form-container__title">
         {type === "register" ? "Добро пожаловать!" : "Рады видеть!"}
       </h1>
-      <form className="form" noValidate onChange={checkErrors} name="form">
+      <form className="form" noValidate name="form">
         <div className="form__fieldsets">
           {type === "register" ? (
             <fieldset className="form__fieldset">
@@ -80,11 +63,11 @@ export default function Form({
                 maxLength={30}
                 pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
                 required
-                value={formParams.name}
-                onChange={handleChangeFormParam}
+                value={form.formParams.name}
+                onChange={form.handleChangeValue}
                 placeholder="name"
               />
-              <span className="form__error">{errorMessage.name}</span>
+              <span className="form__error">{form.errorMessage.name}</span>
             </fieldset>
           ) : null}
 
@@ -98,11 +81,11 @@ export default function Form({
               maxLength={30}
               pattern={"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"}
               required
-              value={formParams.email}
-              onChange={handleChangeFormParam}
+              value={form.formParams.email}
+              onChange={form.handleChangeValue}
               placeholder="email"
             />
-            <span className="form__error">{errorMessage.email}</span>
+            <span className="form__error">{form.errorMessage.email}</span>
           </fieldset>
 
           <fieldset className="form__fieldset">
@@ -111,14 +94,14 @@ export default function Form({
               type="password"
               className={inputPasswordClass}
               name="password"
-              value={formParams.password}
-              onChange={handleChangeFormParam}
+              value={form.formParams.password}
+              onChange={form.handleChangeValue}
               required
               placeholder="password"
             />
           </fieldset>
 
-          <span className="form__error">{errorMessage.password}</span>
+          <span className="form__error">{form.errorMessage.password}</span>
         </div>
         <span className="form__error form__error_common">
           {authError || ""}
@@ -127,7 +110,7 @@ export default function Form({
           className={btnClass}
           type="submit"
           onClick={handleBtnClick}
-          disabled={!formIsValid}
+          disabled={!form.formIsValid}
         >
           {type === "register" ? "Зарегистрироваться" : "Войти"}
         </button>
