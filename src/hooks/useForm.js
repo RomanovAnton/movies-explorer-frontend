@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 
 export default function useForm() {
-  const [formParams, setFormParams] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [formParams, setFormParams] = useState({});
   const [errorMessage, setErrorMessage] = useState({});
   const [formIsValid, setFormIsValid] = useState(false);
 

@@ -11,15 +11,7 @@ import Popup from "../Popup/Popup";
 import { ProtectedRoute } from "../../components/ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { SavedMoviesContext } from "../../contexts/SavedMoviesContext";
-import {
-  register,
-  login,
-  checkToken,
-  updateProfile,
-  addSavedMovie,
-  getSavedMovies,
-  deleteSavedMovie,
-} from "../../utils/MainApi";
+import { mainApi } from "../../utils/MainApi";
 import {
   SUCCSESS_REGISTER_TEXT,
   CONFLICT_ERROR_TEXT,
@@ -51,11 +43,12 @@ export default function App() {
   const getProfileData = () => {
     const token = localStorage.getItem("token");
     if (token) {
-      checkToken(token)
+      mainApi
+        .checkToken()
         .then((res) => {
           setLoggedIn(true);
           setCurrentUser(res);
-          getSavedMovies().then((res) => {
+          mainApi.getSavedMovies().then((res) => {
             setSavedMovies(res);
           });
           navigate("/movies");
@@ -75,10 +68,14 @@ export default function App() {
   };
 
   const handleRegister = (data) => {
-    register(data)
+    mainApi
+      .register(data)
       .then((res) => {
         openPopup(SUCCSESS_REGISTER_TEXT);
-        handleLogin(data);
+        handleLogin({
+          email: data.email,
+          password: data.password,
+        });
       })
       .catch((errCode) => {
         if (errCode === CONFLICT_ERROR_CODE) {
@@ -90,7 +87,8 @@ export default function App() {
   };
 
   const handleLogin = (data) => {
-    login(data)
+    mainApi
+      .login(data)
       .then((res) => {
         if (res.token) {
           localStorage.setItem("token", res.token);
@@ -115,7 +113,8 @@ export default function App() {
   };
 
   const handleUpdateProfile = (data) => {
-    updateProfile(data)
+    mainApi
+      .updateProfile(data)
       .then((res) => {
         setCurrentUser(res);
         openPopup(SUCCSESS_UPDATE_PROFILE_TEXT);
@@ -130,13 +129,14 @@ export default function App() {
   };
 
   const handleSaveMovie = (data) => {
-    addSavedMovie(data).then((newSavedMovie) => {
+    mainApi.addSavedMovie(data).then((newSavedMovie) => {
       setSavedMovies([...savedMovies, newSavedMovie]);
     });
   };
 
   const handleDeleteMovie = (_id) => {
-    deleteSavedMovie(_id)
+    mainApi
+      .deleteSavedMovie(_id)
       .then(() => {
         setSavedMovies((prev) => prev.filter((item) => item._id !== _id));
       })

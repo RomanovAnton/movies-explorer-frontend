@@ -9,12 +9,24 @@ export default function MoviesCard({ card, type, onSaveMovie, onDeleteMovie }) {
   const cardImage =
     type === "saved"
       ? card.image
-      : ` https://api.nomoreparties.co/${card.image.url}`;
+      : `https://api.nomoreparties.co/${card.image.url}`;
 
   const [isSaved, setIsSaved] = useState(false);
 
   const saveMovie = () => {
-    onSaveMovie(card);
+    onSaveMovie({
+      country: card.country,
+      director: card.director,
+      duration: card.duration,
+      year: card.year,
+      description: card.description,
+      image: cardImage,
+      trailerLink: card.trailerLink,
+      thumbnail: cardImage,
+      movieId: card.id,
+      nameRU: card.nameRU,
+      nameEN: card.nameEN,
+    });
   };
 
   const isSavedMovie = () => {

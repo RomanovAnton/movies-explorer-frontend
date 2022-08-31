@@ -63,7 +63,7 @@ export default function Form({
                 maxLength={30}
                 pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
                 required
-                value={form.formParams.name}
+                value={form.formParams.name || ""}
                 onChange={form.handleChangeValue}
                 placeholder="name"
               />
@@ -81,7 +81,7 @@ export default function Form({
               maxLength={30}
               pattern={"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"}
               required
-              value={form.formParams.email}
+              value={form.formParams.email || ""}
               onChange={form.handleChangeValue}
               placeholder="email"
             />
@@ -94,7 +94,7 @@ export default function Form({
               type="password"
               className={inputPasswordClass}
               name="password"
-              value={form.formParams.password}
+              value={form.formParams.password || ""}
               onChange={form.handleChangeValue}
               required
               placeholder="password"

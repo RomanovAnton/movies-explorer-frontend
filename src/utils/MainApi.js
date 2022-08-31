@@ -1,94 +1,43 @@
-const options = {
-  baseUrl: "https://movies.rmv.api.nomoredomains.sbs",
-  headers: {
-    "Content-type": "application/json",
-  },
-};
+class MainApi {
+  _fetch(path, method = "GET", body) {
+    const token = localStorage.getItem("token");
+    return fetch(`https://movies.rmv.api.nomoredomains.sbs${path}`, {
+      method: method,
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+    }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
+  }
 
-export const register = (data) => {
-  return fetch(`${options.baseUrl}/signup`, {
-    method: "POST",
-    headers: options.headers,
-    body: JSON.stringify(data),
-  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
-};
+  register(data) {
+    return this._fetch("/signup", "POST", data);
+  }
 
-export const login = (data) => {
-  return fetch(`${options.baseUrl}/signin`, {
-    method: "POST",
-    headers: options.headers,
-    body: JSON.stringify({
-      email: data.email,
-      password: data.password,
-    }),
-  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
-};
+  login(data) {
+    return this._fetch("/signin", "POST", data);
+  }
 
-export const checkToken = (token) => {
-  return fetch(`${options.baseUrl}/users/me`, {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
-};
+  checkToken() {
+    return this._fetch("/users/me");
+  }
 
-export const updateProfile = (data) => {
-  const token = localStorage.getItem("token");
-  return fetch(`${options.baseUrl}/users/me`, {
-    method: "PATCH",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
-};
+  updateProfile(data) {
+    return this._fetch("/users/me", "PATCH", data);
+  }
 
-export const addSavedMovie = (data) => {
-  const cardImage = `https://api.nomoreparties.co/${data.image.url}`;
-  const token = localStorage.getItem("token");
-  return fetch(`${options.baseUrl}/movies`, {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      country: data.country || "unkown",
-      director: data.director,
-      duration: data.duration,
-      year: data.year,
-      description: data.description,
-      image: cardImage,
-      trailerLink: data.trailerLink,
-      thumbnail: cardImage,
-      movieId: data.id,
-      nameRU: data.nameRU,
-      nameEN: data.nameEN,
-    }),
-  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
-};
+  addSavedMovie(data) {
+    return this._fetch("/movies", "POST", data);
+  }
 
-export const deleteSavedMovie = (_id) => {
-  const token = localStorage.getItem("token");
-  return fetch(`${options.baseUrl}/movies/${_id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
-};
+  deleteSavedMovie(_id) {
+    return this._fetch(`/movies/${_id}`, "DELETE", {});
+  }
 
-export const getSavedMovies = () => {
-  const token = localStorage.getItem("token");
-  return fetch(`${options.baseUrl}/movies`, {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
-};
+  getSavedMovies() {
+    return this._fetch(`/movies`);
+  }
+}
+
+export const mainApi = new MainApi();

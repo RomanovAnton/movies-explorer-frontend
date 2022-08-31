@@ -56,7 +56,7 @@ export default function Profile({
                 pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
                 required
                 placeholder="name"
-                value={form.formParams.name}
+                value={form.formParams.name || ""}
                 onChange={form.handleChangeValue}
               />
             </fieldset>
@@ -75,7 +75,7 @@ export default function Profile({
                 pattern={"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"}
                 required
                 placeholder="email"
-                value={form.formParams.email}
+                value={form.formParams.email || ""}
                 onChange={form.handleChangeValue}
               />
             </fieldset>
