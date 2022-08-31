@@ -8,6 +8,7 @@ import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import Popup from "../Popup/Popup";
+import usePopup from "../../hooks/usePopup";
 import { ProtectedRoute } from "../../components/ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { SavedMoviesContext } from "../../contexts/SavedMoviesContext";
@@ -28,9 +29,8 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
-  const [popupIsOpen, setPopupIsOpen] = useState(false);
-  const [popupMessage, setPopupMessage] = useState("");
   const [authError, setAuthError] = useState("");
+  const popup = usePopup();
 
   const resetError = () => {
     setAuthError("");
@@ -57,21 +57,11 @@ export default function App() {
     }
   };
 
-  const closePopup = () => {
-    setPopupIsOpen(false);
-    setPopupMessage("");
-  };
-
-  const openPopup = (message) => {
-    setPopupMessage(message);
-    setPopupIsOpen(true);
-  };
-
   const handleRegister = (data) => {
     mainApi
       .register(data)
       .then((res) => {
-        openPopup(SUCCSESS_REGISTER_TEXT);
+        popup.openPopup(SUCCSESS_REGISTER_TEXT);
         handleLogin({
           email: data.email,
           password: data.password,
@@ -100,7 +90,7 @@ export default function App() {
         if (errCode === UNAUTHORIZED_ERROR_CODE) {
           setAuthError(UNAUTHORIZED_ERROR_TEXT);
         } else {
-          openPopup(COMMON_ERROR_TEXT);
+          popup.openPopup(COMMON_ERROR_TEXT);
         }
         setLoggedIn(false);
       });
@@ -117,7 +107,7 @@ export default function App() {
       .updateProfile(data)
       .then((res) => {
         setCurrentUser(res);
-        openPopup(SUCCSESS_UPDATE_PROFILE_TEXT);
+        popup.openPopup(SUCCSESS_UPDATE_PROFILE_TEXT);
       })
       .catch((errCode) => {
         if (errCode === CONFLICT_ERROR_CODE) {
@@ -140,7 +130,7 @@ export default function App() {
       .then(() => {
         setSavedMovies((prev) => prev.filter((item) => item._id !== _id));
       })
-      .catch(() => openPopup(COMMON_ERROR_TEXT));
+      .catch(() => popup.openPopup(COMMON_ERROR_TEXT));
   };
 
   return (
@@ -175,7 +165,7 @@ export default function App() {
               element={
                 <ProtectedRoute loggedIn={loggedIn}>
                   <Movies
-                    openPopup={openPopup}
+                    openPopup={popup.openPopup}
                     onSaveMovie={handleSaveMovie}
                     onDeleteMovie={handleDeleteMovie}
                   />
@@ -188,7 +178,7 @@ export default function App() {
                 <ProtectedRoute loggedIn={loggedIn}>
                   <SavedMovies
                     onDeleteMovie={handleDeleteMovie}
-                    openPopup={openPopup}
+                    openPopup={popup.openPopup}
                   />
                 </ProtectedRoute>
               }
@@ -209,9 +199,9 @@ export default function App() {
           </Routes>
 
           <Popup
-            isOpen={popupIsOpen}
-            message={popupMessage}
-            closePopup={closePopup}
+            isOpen={popup.popupIsOpen}
+            message={popup.popupMessage}
+            closePopup={popup.closePopup}
           />
         </div>
       </SavedMoviesContext.Provider>
