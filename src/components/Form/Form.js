@@ -2,6 +2,7 @@ import classNames from "classnames";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import useValidation from "../../hooks/useValidation";
 import "./Form.css";
 
 export default function Form({
@@ -11,14 +12,10 @@ export default function Form({
   authError,
   onResetError,
 }) {
-  const [formIsValid, setFormIsValid] = useState(false);
-  const [formParams, setFormParams] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const { errorMessage, formIsValid, setFormIsValid, checkErrors } =
+    useValidation();
 
-  const [errorMessage, setErrorMessage] = useState({
+  const [formParams, setFormParams] = useState({
     name: "",
     email: "",
     password: "",
@@ -27,22 +24,10 @@ export default function Form({
   const handleChangeFormParam = (evt) => {
     const { name, value } = evt.target;
     const form = evt.target.closest("form");
-
     setFormParams((prev) => ({
       ...prev,
       [name]: value,
     }));
-
-    setErrorMessage((prev) => ({
-      ...prev,
-      [name]: evt.target.validationMessage,
-    }));
-
-    if (form.checkValidity()) {
-      setFormIsValid(true);
-    } else {
-      setFormIsValid(false);
-    }
   };
 
   const handleBtnClick = (evt) => {
@@ -82,7 +67,7 @@ export default function Form({
       <h1 className="form-container__title">
         {type === "register" ? "Добро пожаловать!" : "Рады видеть!"}
       </h1>
-      <form className="form" noValidate>
+      <form className="form" noValidate onChange={checkErrors} name="form">
         <div className="form__fieldsets">
           {type === "register" ? (
             <fieldset className="form__fieldset">

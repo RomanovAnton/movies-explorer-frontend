@@ -3,6 +3,7 @@ import classNames from "classnames";
 import Header from "../Header/Header";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./Profile.css";
+import useValidation from "../../hooks/useValidation";
 
 export default function Profile({
   onSignOut,
@@ -10,37 +11,21 @@ export default function Profile({
   authError,
   onResetError,
 }) {
+  const { errorMessage, formIsValid, setFormIsValid, checkErrors } =
+    useValidation();
   const currentUser = useContext(CurrentUserContext);
   const [formParams, setFormParams] = useState({
     name: currentUser.name,
     email: currentUser.email,
   });
 
-  const [formIsValid, setFormIsValid] = useState(false);
-  const [errorMessage, setErrorMessage] = useState({
-    name: "",
-    email: "",
-  });
-
   const handleChangeFormParam = (evt) => {
     const { name, value } = evt.target;
     const form = evt.target.closest(".profile__form");
-
     setFormParams((prev) => ({
       ...prev,
       [name]: value,
     }));
-
-    setErrorMessage((prev) => ({
-      ...prev,
-      [name]: evt.target.validationMessage,
-    }));
-
-    if (form.checkValidity()) {
-      setFormIsValid(true);
-    } else {
-      setFormIsValid(false);
-    }
   };
 
   const handleBtnClick = (evt) => {
@@ -65,7 +50,12 @@ export default function Profile({
       <Header loggedIn={true} />
       <main className="profile">
         <section className="profile__container">
-          <form className="profile__form" name="edit-form" noValidate>
+          <form
+            className="profile__form"
+            name="edit-form"
+            noValidate
+            onChange={checkErrors}
+          >
             <h1 className="profile__title">
               {`Привет, ${currentUser.name || ""}`}
             </h1>
