@@ -12,7 +12,7 @@ export default function SearchForm({
   renderMovies,
   renderSavedMovies,
   openPopup,
-  setPreloader
+  setPreloader,
 }) {
   const [inputValue, setInputValue] = useState("");
   const [checkboxValue, setCheckboxValue] = useState(false);

@@ -12,7 +12,6 @@ export default function Form({
   onResetError,
 }) {
   const form = useForm();
-
   const handleBtnClick = (evt) => {
     evt.preventDefault();
     if (type === "register") {
@@ -79,7 +78,7 @@ export default function Form({
               name="email"
               minLength={2}
               maxLength={30}
-              pattern={"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"}
+              pattern="^[\w]+@[a-zA-Z]+\.[a-zA-Z]{2,4}$"
               required
               value={form.formParams.email || ""}
               onChange={form.handleChangeValue}

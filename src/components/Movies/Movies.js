@@ -4,7 +4,14 @@ import Footer from "../Footer/Footer";
 import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import { filterMovies } from "../../utils/filterMovies";
-import { ERROR_NOT_FOUND_SEARCH_TEXT } from "../../utils/constants/constants";
+import {
+  ERROR_NOT_FOUND_SEARCH_TEXT,
+  NUM_MOVIES_LESS_1280,
+  NUM_MOVIES_LESS_769,
+  NUM_MOVIES_LESS_480,
+  STEP_LESS_1280,
+  STEP_LESS_769,
+} from "../../utils/constants/constants";
 import Preloader from "./Preloader/Preloader";
 import "./Movies.css";
 
@@ -34,17 +41,17 @@ export default function Movies({ openPopup, onSaveMovie, onDeleteMovie }) {
 
   const determineWidth = (width) => {
     if (width < 481) {
-      setNumDisplayedMovies(5);
-      setNumAddedMovies(2);
+      setNumDisplayedMovies(NUM_MOVIES_LESS_480);
+      setNumAddedMovies(STEP_LESS_769);
       return;
     }
     if (width > 480 && width < 769) {
-      setNumDisplayedMovies(8);
-      setNumAddedMovies(2);
+      setNumDisplayedMovies(NUM_MOVIES_LESS_769);
+      setNumAddedMovies(STEP_LESS_769);
       return;
     }
-    setNumDisplayedMovies(12);
-    setNumAddedMovies(3);
+    setNumDisplayedMovies(NUM_MOVIES_LESS_1280);
+    setNumAddedMovies(STEP_LESS_1280);
   };
 
   const renderMovies = () => {

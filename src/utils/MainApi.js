@@ -19,7 +19,7 @@ class MainApi {
     return this._fetch("/signin", "POST", data);
   }
 
-  checkToken() {
+  getUser() {
     return this._fetch("/users/me");
   }
 

@@ -24,15 +24,21 @@ export default function Profile({
     form.setFormIsValid(false);
   };
 
-  const inputClass = classNames("profile__input", {
+  const inputNameClass = classNames("profile__input", {
     "profile__input_error": form.errorMessage.name,
   });
+
+  const inputEmailClass = classNames("profile__input", {
+    "profile__input_error": form.errorMessage.email,
+  });
+
   const classBtn = classNames("profile__btn", "profile__btn_type_edit", {
     "profile__btn_disabled": !form.formIsValid,
   });
 
   useEffect(() => {
     onResetError();
+    form.checkDataIsChanged(currentUser);
   }, [form.formParams]);
 
   return (
@@ -48,7 +54,7 @@ export default function Profile({
             <fieldset className="profile__fieldset">
               <label className="profile__label">Имя</label>
               <input
-                className={inputClass}
+                className={inputNameClass}
                 name="name"
                 type="text"
                 minLength={2}
@@ -67,12 +73,12 @@ export default function Profile({
             <fieldset className="profile__fieldset">
               <label className="profile__label">E-mail</label>
               <input
-                className={inputClass}
+                className={inputEmailClass}
                 name="email"
                 type="email"
                 minLength={2}
                 maxLength={30}
-                pattern={"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"}
+                pattern="^[\w]+@[a-zA-Z]+\.[a-zA-Z]{2,4}$"
                 required
                 placeholder="email"
                 value={form.formParams.email || ""}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function useForm() {
   const [formParams, setFormParams] = useState({});
@@ -28,6 +28,15 @@ export default function useForm() {
     }
   };
 
+  const checkDataIsChanged = (currentUser) => {
+    if (
+      currentUser.name === formParams.name &&
+      currentUser.email === formParams.email
+    ) {
+      setFormIsValid(false);
+    }
+  };
+
   return {
     formParams,
     setFormParams,
@@ -36,5 +45,6 @@ export default function useForm() {
     formIsValid,
     setFormIsValid,
     handleChangeValue,
+    checkDataIsChanged,
   };
 }

@@ -26,34 +26,37 @@ import "./App.css";
 
 export default function App() {
   let navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = useState(false);
+
+  const loggedIn = localStorage.getItem("loggedIn");
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
   const [authError, setAuthError] = useState("");
   const popup = usePopup();
 
-  const resetError = () => {
-    setAuthError("");
-  };
-
   useEffect(() => {
-    getProfileData();
+    if (loggedIn) {
+      getProfileData();
+    }
   }, [loggedIn]);
 
   const getProfileData = () => {
     const token = localStorage.getItem("token");
     if (token) {
       mainApi
-        .checkToken()
+        .getUser()
         .then((res) => {
-          setLoggedIn(true);
+          localStorage.setItem("loggedIn", true);
           setCurrentUser(res);
-          mainApi.getSavedMovies().then((res) => {
-            setSavedMovies(res);
-          });
-          navigate("/movies");
+          mainApi
+            .getSavedMovies()
+            .then((res) => {
+              setSavedMovies(res);
+            })
+            .catch(() => {
+              popup.openPopup(COMMON_ERROR_TEXT);
+            });
         })
-        .catch((errCode) => console.log(errCode));
+        .catch(() => popup.openPopup(COMMON_ERROR_TEXT));
     }
   };
 
@@ -72,6 +75,7 @@ export default function App() {
           setAuthError(CONFLICT_ERROR_TEXT);
         } else {
           setAuthError(COMMON_ERROR_TEXT);
+          popup.openPopup(COMMON_ERROR_TEXT);
         }
       });
   };
@@ -82,7 +86,7 @@ export default function App() {
       .then((res) => {
         if (res.token) {
           localStorage.setItem("token", res.token);
-          setLoggedIn(true);
+          localStorage.setItem("loggedIn", true);
           navigate("/movies");
         }
       })
@@ -92,13 +96,13 @@ export default function App() {
         } else {
           popup.openPopup(COMMON_ERROR_TEXT);
         }
-        setLoggedIn(false);
+        localStorage.setItem("loggedIn", "");
       });
   };
 
   const signOut = () => {
     localStorage.removeItem("token");
-    setLoggedIn(false);
+    localStorage.clear();
     navigate("/");
   };
 
@@ -119,9 +123,14 @@ export default function App() {
   };
 
   const handleSaveMovie = (data) => {
-    mainApi.addSavedMovie(data).then((newSavedMovie) => {
-      setSavedMovies([...savedMovies, newSavedMovie]);
-    });
+    mainApi
+      .addSavedMovie(data)
+      .then((newSavedMovie) => {
+        setSavedMovies([...savedMovies, newSavedMovie]);
+      })
+      .catch(() => {
+        popup.openPopup(COMMON_ERROR_TEXT);
+      });
   };
 
   const handleDeleteMovie = (_id) => {
@@ -131,6 +140,10 @@ export default function App() {
         setSavedMovies((prev) => prev.filter((item) => item._id !== _id));
       })
       .catch(() => popup.openPopup(COMMON_ERROR_TEXT));
+  };
+
+  const resetError = () => {
+    setAuthError("");
   };
 
   return (
