@@ -1,0 +1,201 @@
+.about-me {
+  background-color: #fafafa;
+  padding: 110px 0 105px;
+}
+.about-me__container {
+  display: flex;
+  flex-direction: column;
+  max-width: 89%;
+  margin: auto;
+}
+.about-me__title {
+  width: 100%;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  align-self: flex-start;
+  padding-bottom: 23px;
+  border-bottom: solid 1px #000000;
+  margin: 0;
+}
+
+.person {
+  padding: 66px 0 101px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24%;
+}
+
+.person__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.person__name {
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+.person__job {
+  padding: 18px 0 26px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  margin: 0;
+}
+
+.person__about {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 0;
+}
+
+.person__image {
+  width: 270px;
+  height: 327px;
+  border-radius: 10px;
+  align-self: flex-start;
+  object-fit: cover;
+}
+
+.person__link-list {
+  padding: 119px 0 0;
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+}
+
+.person__link-item {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration: none;
+  color: #000000;
+  transition: 0.3s;
+}
+
+.person__link-item:hover {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 825px) {
+  .about-me {
+    padding: 90px 0 70px;
+  }
+
+  .about-me__container {
+    max-width: 87%;
+  }
+
+  .person {
+    padding: 66px 0 91px;
+    gap: 7.33%;
+  }
+
+  .person__name {
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .person__job {
+    padding: 16px 0 20px;
+    font-size: 12px;
+    line-height: 18px;
+    min-width: 348px;
+  }
+
+  .person__about {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .person__image {
+    width: 255px;
+    height: 307px;
+  }
+
+  .person__link-list {
+    padding: 122px 0 0;
+  }
+
+  .porfolio__link {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .about-me {
+    padding: 70px 0 50px;
+  }
+
+  .about-me__container {
+    max-width: 91.25%;
+  }
+
+  .person__name {
+    font-size: 30px;
+    line-height: 36.3px;
+  }
+
+  .person__job {
+    min-width: 260px;
+    padding: 20px 0 20px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .person__about {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .person__image {
+    width: 36%;
+    height: 100%;
+  }
+
+  .person__link-list {
+    padding: 40px 0 0;
+  }
+
+  .porfolio__link {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .person {
+    padding: 60px 0 69px;
+    gap: 40px;
+    flex-direction: column-reverse;
+  }
+
+  .about-me__title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
+  }
+
+  .person__about {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .person__image {
+    align-self: center;
+    width: 292px;
+    height: 352px;
+  }
+
+  .person__link-list {
+    padding: 71px 0 0;
+  }
+}

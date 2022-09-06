@@ -1,0 +1,150 @@
+.search {
+  width: 100%;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 33px;
+  padding: 70px 0 48px;
+}
+
+.search-form__container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 13px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.search-form__input {
+  padding: 0;
+  background-color: #fafafa;
+  width: 90%;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  color: #a0a0a0;
+  border: none;
+  outline: 0;
+}
+
+input::-webkit-input-placeholder {
+  color: #a0a0a0;
+}
+
+input::-moz-placeholder {
+  color: #a0a0a0;
+}
+
+.search-form__btn {
+  width: 80px;
+  height: 34px;
+  border-radius: 48px;
+  border: 0;
+  background-color: #3456f3;
+  background-image: url(../../../images/search-icon-min.svg);
+  background-repeat: no-repeat;
+  object-fit: contain;
+  background-position: center;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.search-form__btn_disabled {
+  background-color: #f4f4f4;
+  color: #0000;
+  cursor: default;
+  transition: 0.3s;
+}
+
+.search-form__btn:hover {
+  opacity: 0.8;
+}
+
+.checkbox__input {
+  display: none;
+}
+
+.checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 14px;
+}
+
+.checkbox__caption {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  margin: 0;
+}
+
+.checkbox__custom {
+  width: 36px;
+  height: 20px;
+  background-color: #ebebeb;
+  border-radius: 20px;
+  position: relative;
+  transition: 0.3s;
+}
+
+.checkbox__custom::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  top: 30%;
+  left: 61.11%;
+  left: 16.67%;
+  background-color: #ffffff;
+  transition: 0.3s;
+}
+
+.checkbox__input:checked ~ .checkbox__custom {
+  background-color: #2be080;
+}
+.checkbox__input:checked ~ .checkbox__custom::after {
+  left: 61.11%;
+}
+
+@media screen and (max-width: 769px) {
+  .search-form {
+    padding: 80px 0 61px;
+    gap: 29px;
+  }
+
+  .checkbox {
+    flex-direction: row-reverse;
+    justify-content: end;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .search-form {
+    padding: 84px 0 51px;
+    gap: 41px;
+  }
+
+  .search-form__input {
+    width: 70%;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .search-form__container {
+    padding-bottom: 9px;
+  }
+
+  .checkbox {
+    justify-content: center;
+    gap: 13px;
+  }
+
+  .checkbox__caption {
+    font-size: 11px;
+  }
+}
