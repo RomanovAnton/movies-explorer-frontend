@@ -10,7 +10,7 @@ export default function Portfolio() {
           <li className="portfolio__list-item">
             <a
               className="porfolio__link"
-              href="https://romanovanton.github.io/how-to-learn/index.html"
+              href="https://github.com/RomanovAnton/how-to-learn"
               target="_blank"
               rel="noreferrer"
             >
@@ -21,7 +21,7 @@ export default function Portfolio() {
           <li className="portfolio__list-item">
             <a
               className="porfolio__link"
-              href="https://romanovanton.github.io/russian-travel/index.html"
+              href="https://github.com/RomanovAnton/russian-travel"
               target="_blank"
               rel="noreferrer"
             >
@@ -32,7 +32,7 @@ export default function Portfolio() {
           <li className="portfolio__list-item">
             <a
               className="porfolio__link"
-              href="https://romanovanton.github.io/react-mesto-auth/index.html"
+              href="https://github.com/RomanovAnton/react-mesto-api-full"
               target="_blank"
               rel="noreferrer"
             >
