@@ -22,7 +22,7 @@ export default function AboutMe() {
               <li>
                 <a
                   className="person__link-item"
-                  href="https://t.me/AntRmv"
+                  href="https://t.me/antrmv25"
                   target="_blank"
                   rel="noreferrer"
                 >
